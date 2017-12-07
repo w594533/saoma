@@ -33,12 +33,14 @@ class HomeController extends Controller
       $temporary = $app->material_temporary;
 
       $media_ids = $request->media_ids;
-      return $media_ids;
+
+      $media_ids = explode(",", $media_ids);
       $files = '';
+	    @mkdir(storage_path('app/public').'/upload/images/', 0777, true);
       foreach ($media_ids as $key => $media_id) {
         $filename = md5(md5(time().rand(1,9999)));
-        $temporary->download($media_id, \Storage::disk('local').'/public/images/', $filename.".jpg");
-        $files[] = '/public/images/'.$filename.".jpg";
+        $temporary->download($media_id, storage_path('app/public').'/upload/images/', $filename.".jpg");
+        $files[] = '/upload/images/'.$filename.'.jpg';
       }
       return $files;
     }
