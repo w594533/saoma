@@ -39,23 +39,34 @@ $(function() {
 });
 
   function upload(localIds){
+    var serverIds = [];
+    var imghtml = '';
     for(var i=0; i<localIds.length; i++)  {
       wx.uploadImage({
         localId: localIds[i],
         success: function(res) {
           alert('已上传：' + i + '/' + length);
-          images.serverId.push(res.serverId);
+          serverIds.push(res.serverId);
+          imghtml +='<img src="'+localIds[i]+'" width="100" height="100"/>';
         },
         fail: function(res) {
           alert(JSON.stringify(res));
         }
       });
     }
-    var imghtml = '';
-    for(var j=0; j<localIds.length; j++) {
-      imghtml +='<img src="'+localIds[j]+'"/>';
-    }
     $(".img-box").html(imghtml);
+
+    alert(JSON.stringify(serverIds));
+    //将图片下载到服务器
+    $.ajax({
+      type:'post',
+      url: '{{route("uploadimg")}}',
+      data: {'media_ids[]':serverIds},
+      success: function(res) {
+        alert(res);
+        alert('上传成功');
+      }
+    })
   }
 
 </script>
