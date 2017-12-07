@@ -3,16 +3,21 @@
 namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\FrontendController;
 use EasyWeChat\Foundation\Application;
 
 
-class HomeController extends Controller
+class HomeController extends FrontendController
 {
+    public function __construct()
+    {
+      parent::__construct();
+    }
+
     public function show()
     {
-      // dd(config('wechat'));
-      $user = session('wechat.oauth_user'); // 拿到授权用户资料
+      $oauth_user = session('wechat.oauth_user'); // 拿到授权用户资料
+      //dd(session('ws.user'));
       return view('Frontend.home');
     }
 
@@ -25,22 +30,31 @@ class HomeController extends Controller
       return view('Frontend.uploadimg', compact('jssdk'));
     }
 
-    public function uploadimg(Request $request)
+    public function showuploadvoice()
     {
       $app = new Application(config('wechat'));
+      $js = $app->js;
 
+      $voices = array("startRecord","stopRecord","onVoiceRecordEnd","playVoice","pauseVoice","stopVoice","onVoicePlayEnd","uploadVoice","downloadVoice",);
+
+      $jssdk = '<script type="text/javascript" charset="utf-8">wx.config('.$js->config($voices), true).');</script>';
+      return view('Frontend.uploadvoice', compact('jssdk'));
+    }
+
+    public function uploadimg(Request $request)
+    {
+      $user = session('ws.user');
+      $app = new Application(config('wechat'));
       // 临时素材
       $temporary = $app->material_temporary;
-
       $media_ids = $request->media_ids;
-
       $media_ids = explode(",", $media_ids);
       $files = '';
-	    @mkdir(storage_path('app/public').'/upload/images/', 0777, true);
+	    @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
       foreach ($media_ids as $key => $media_id) {
         $filename = md5(md5(time().rand(1,9999)));
-        $temporary->download($media_id, storage_path('app/public').'/upload/images/', $filename.".jpg");
-        $files[] = '/upload/images/'.$filename.'.jpg';
+        $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename.".jpg");
+        $files[] = '/upload/'.$user->id.'/'.$filename.'.jpg';
       }
       return $files;
     }

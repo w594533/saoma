@@ -27,7 +27,7 @@
         <img src="/img/3.png"/>
       </div>
       <div class="button">
-        <div class="slogin">录制语音</div>
+        <div class="slogin"><a href="{{route('showuploadvoice')}}">录制语音</a></div>
       </div>
     </div>
     <div class="box-item fr">
