@@ -26,13 +26,12 @@ $(function() {
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
       success: function(res) {
-        images.localId = res.localIds;
         alert('已选择 ' + res.localIds.length + ' 张图片');
-        if (images.localId.length == 0) {
+        if (res.localIds.length == 0) {
           alert('请先使用 chooseImage 接口选择图片');
           return;
         }
-        upload(images.localId);
+        upload(res.localIds);
       }
     });
   })
@@ -44,29 +43,32 @@ $(function() {
     for(var i=0; i<localIds.length; i++)  {
       wx.uploadImage({
         localId: localIds[i],
+        isShowProgressTips: 1,
         success: function(res) {
           alert('已上传：' + i + '/' + length);
+          alert(JSON.stringify(res));
+          alert(res.serverId);
           serverIds.push(res.serverId);
           imghtml +='<img src="'+localIds[i]+'" width="100" height="100"/>';
-        },
-        fail: function(res) {
-          alert(JSON.stringify(res));
         }
       });
     }
     $(".img-box").html(imghtml);
 
     alert(JSON.stringify(serverIds));
-    //将图片下载到服务器
-    $.ajax({
-      type:'post',
-      url: '{{route("uploadimg")}}',
-      data: {'media_ids[]':serverIds},
-      success: function(res) {
-        alert(res);
-        alert('上传成功');
-      }
-    })
+    if (serverIds) {
+      alert(23);
+      //将图片下载到服务器
+      $.ajax({
+        type:'post',
+        url: '{{route("uploadimg")}}',
+        data: {'media_ids[]':serverIds},
+        success: function(res) {
+          alert(res);
+          alert('上传成功');
+        }
+      })
+    }
   }
 
 </script>
