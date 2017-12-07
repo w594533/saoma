@@ -38,7 +38,7 @@ class HomeController extends Controller
       foreach ($media_ids as $key => $media_id) {
         $filename = md5(md5(time().rand(1,9999)));
         $temporary->download($media_id, \Storage::disk('local').'/public/images/', $filename.".jpg");
-        $files[] = '/public/images/', $filename.".jpg";
+        $files[] = '/public/images/'.$filename.".jpg";
       }
       return $files;
     }
