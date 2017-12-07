@@ -13,7 +13,7 @@ class HomeController extends Controller
     {
       // dd(config('wechat'));
       $user = session('wechat.oauth_user'); // 拿到授权用户资料
-      return view('frontend.home');
+      return view('Frontend.home');
     }
 
     public function showuploadimg()
@@ -22,6 +22,6 @@ class HomeController extends Controller
       $js = $app->js;
 
       $jssdk = '<script type="text/javascript" charset="utf-8">wx.config('.$js->config(array('uploadImage', 'chooseImage'), true).');</script>';
-      return view('frontend.uploadimg', compact('jssdk'));
+      return view('Frontend.uploadimg', compact('jssdk'));
     }
 }

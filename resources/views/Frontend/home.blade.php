@@ -1,4 +1,4 @@
-@extends('frontend.layouts.default')
+@extends('Frontend.layouts.default')
 
 @section('content')
 <div class="box">
