@@ -23,12 +23,6 @@ var i = 0;
 
 $(function() {
   $(".button-upload-img").click(function() {
-    var images = {
-      localId: [],
-      serverId: []
-    };
-    var i = 0;
-
     wx.chooseImage({
       count: 4, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
