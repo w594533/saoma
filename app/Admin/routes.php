@@ -11,6 +11,8 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index');
+    $router->get('/boxes_generate', 'BoxGenerateController@index');
+    $router->post('/generate', 'BoxGenerateController@generate')->name('generate');
 
     $router->resource('/boxes', 'BoxController');
 

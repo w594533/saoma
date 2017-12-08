@@ -27,4 +27,18 @@ class FrontendController extends BaseController
       }
       session(['ws.user' => $user]);
     }
+
+    protected function _check_box()
+    {
+      if (Request()->session()->exists('ws.box')) {
+        //没有存储box非法进入
+        abort(403,'对不起，您无权访问该页面！');
+      } else {
+        $user = session('ws.user');
+        $box = session('ws.box');
+        if ($box->user_id != $user->id) {
+          abort(403,'对不起，您无权访问该页面！');
+        }
+      }
+    }
 }

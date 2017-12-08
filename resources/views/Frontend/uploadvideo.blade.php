@@ -24,7 +24,7 @@
 <script>
 $('#upload').Huploadify({
     auto:true,
-    fileTypeExts:'*.mp4; *.wma; *.rmvb; *.rm; *.flash',
+    fileTypeExts:'*.jpg',
     multi:true,
     formData:{_token:$('input[name="_token"]').val()},
     fileSizeLimit:10*1024,

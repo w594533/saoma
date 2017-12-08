@@ -11,7 +11,7 @@
 @section('content')
   <div class="text-box">
     {{ csrf_field() }}
-    <textarea name="body" id="body"></textarea>
+    <textarea name="body" id="body">{{$box->body}}</textarea>
   </div>
   <div class="upload-btn">
     <button class="save btn btn-default btn-sm"><i class="fa fa-save"></i> 保存</button>

@@ -1,13 +1,19 @@
 @extends('Frontend.layouts.default')
-
+@section('css')
+  <style>
+  .upload-btn .hide {display: none;}
+  </style>
+@endsection
 @section('content')
 <div class="img-box">
-  {{-- <img src="/img/1.png"/>
-  <img src="/img/1.png"/>
-  <img src="/img/1.png"/> --}}
+  @foreach ($images as $key => $image)
+    <img src="{{Storage::url($image)}}" width="100" height="100"/>
+  @endforeach
 </div>
 <div class="upload-btn">
-  <a href="javascript:void(0)" class="button-upload-img">上传图片</a>
+  <button class="button-select-img btn btn-default btn-sm"><i class="fa fa-save"></i> 选择图片</button>
+  <button class="button-upload-img btn btn-default btn-sm hide"><i class="fa fa-save"></i> 开始上传</button>
+  <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> 返回</button>
 </div>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
 {!! $jssdk !!}
@@ -22,7 +28,11 @@ var images = {
 var i = 0;
 
 $(function() {
-  $(".button-upload-img").click(function() {
+  $(".button-upload-back").on('click', function() {
+    location.href="{{route('home')}}";
+  });
+
+  $(".button-select-img").on('touchstart', function() {
     wx.chooseImage({
       count: 4, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -30,20 +40,31 @@ $(function() {
       success: function(res) {
         //alert('已选择 ' + res.localIds.length + ' 张图片');
         images.localIds = res.localIds;
+        var imghtml = '';
+        for(var j=0; j<res.localIds.length; j++) {
+          imghtml += '<img src="'+res.localIds[i]+'" width="100" height="100"/>';
+        }
+        $(".img-box").html(imghtml);
         if (res.localIds.length == 0) {
           alert('请先使用 chooseImage 接口选择图片');
           return;
         }
-        upload();
+        $(".button-select-img").attr("disabled", "disabled");
+        $(".button-upload-img").removeClass("hide");
       }
     });
+  })
+
+  //上传图片
+  $(".button-upload-img").on('touchstart', function() {
+    layer.open({  type: 2,content: '上传中' });
+    upload();
   })
 });
 
 function upload(){
   alert(images.localIds);
   var serverIds = [];
-  var imghtml = '';
   wx.uploadImage({
     localId: images.localIds[i],
     isShowProgressTips: 1,
@@ -52,7 +73,6 @@ function upload(){
       //alert('已上传：' + i + '/' + length);
       //alert("333"+JSON.stringify(res));
       //alert(res.serverId);
-      imghtml += '<img src="'+images.localIds[i]+'" width="100" height="100"/>';
       images.serverId.push(res.serverId);
       if (i < images.localIds.length) {
         upload();
@@ -67,9 +87,16 @@ function upload(){
             data: {'media_ids':images.serverId.join(",")},
             dataType: 'json',
             success: function(res) {
-              $(".img-box").html(imghtml);
+              layer.closeAll();
+              $(".button-select-img").attr("disabled", "");
+              $(".button-upload-img").addClass("hide");
               alert(res);
-              alert('上传成功');
+              layer.open({
+                shade: true,
+                content: '上传成功',
+                skin: 'msg',
+                time: 2 //2秒后自动关闭
+              });
             },
       			error: function(err) {
       				alert(JSON.stringify(err));
