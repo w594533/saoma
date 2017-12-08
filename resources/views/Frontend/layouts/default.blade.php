@@ -10,6 +10,7 @@
       <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
       <link rel="stylesheet" href="/css/normalize.css">
       <link rel="stylesheet" href="/css/main.css">
+      @yield('css')
       @yield('js')
       <title>@yield('title')</title>
 </head>

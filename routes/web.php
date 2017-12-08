@@ -20,6 +20,7 @@ Route::group(['middleware' => ['web', 'wechat.oauth']], function () {
     Route::get('/showuploadimg', 'Frontend\HomeController@showuploadimg')->name('showuploadimg');
     Route::get('/showuploadvoice', 'Frontend\HomeController@showuploadvoice')->name('showuploadvoice');
     Route::get('/uploadimg', 'Frontend\HomeController@uploadimg')->name('uploadimg');
+    Route::get('/uploadvoice', 'Frontend\HomeController@uploadvoice')->name('uploadvoice');
 
     // Route::get('/user', function () {
     //     $user = session('wechat.oauth_user'); // 拿到授权用户资料

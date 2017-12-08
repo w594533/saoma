@@ -41,6 +41,7 @@ class HomeController extends FrontendController
       return view('Frontend.uploadvoice', compact('jssdk'));
     }
 
+    //上传图片
     public function uploadimg(Request $request)
     {
       $user = session('ws.user');
@@ -56,6 +57,21 @@ class HomeController extends FrontendController
         $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename.".jpg");
         $files[] = '/upload/'.$user->id.'/'.$filename.'.jpg';
       }
-      return $files;
+      return response()->json($files, 200);
+    }
+
+    //上传语音
+    public function uploadvoice(Request $request)
+    {
+        $user = session('ws.user');
+        $app = new Application(config('wechat'));
+        // 临时素材
+        $temporary = $app->material_temporary;
+        $media_id = $request->media_id;
+        @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
+        $filename = md5(md5(time().rand(1,9999)));
+        $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename.".amr");
+        $file = '/upload/'.$user->id.'/'.$filename.'.amr';
+        return response()->json($file, 200);
     }
 }
