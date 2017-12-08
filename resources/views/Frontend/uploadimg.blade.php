@@ -65,6 +65,7 @@ function upload(){
             type:'get',
             url: "{{route('uploadimg')}}",
             data: {'media_ids':images.serverId.join(",")},
+            dataType: 'json',
             success: function(res) {
               $(".img-box").html(imghtml);
               alert(res);

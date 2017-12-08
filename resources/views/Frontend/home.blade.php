@@ -16,7 +16,7 @@
         <img src="/img/2.png"/>
       </div>
       <div class="button">
-        <div class="slogin">上传视频</div>
+        <div class="slogin"><a href="{{route('showuploadvideo')}}">上传视频</a></div>
       </div>
     </div>
     <div class="clear"></div>
@@ -35,7 +35,7 @@
         <img src="/img/4.png"/>
       </div>
       <div class="button">
-        <div class="slogin">输入文字</div>
+        <div class="slogin"><a href="{{route('showuploadtext')}}">输入文字</a></div>
       </div>
     </div>
     <div class="clear"></div>

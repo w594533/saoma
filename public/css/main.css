@@ -46,7 +46,7 @@ body {
   margin: 20px 0;
   text-align: center;
 }
-.upload-btn button {
+.upload-btn button, .content .uploadify-button {
   display: inline-block;
   color: #fff;
   font-size: 20px;
@@ -54,4 +54,8 @@ body {
   padding: 5px 10px;
   text-decoration: none;
   border: none !important;
+  border-radius: 4px;
+}
+ .content .uploadify-button:hover {
+  background: #0071B4;
 }
