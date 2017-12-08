@@ -35,9 +35,9 @@ class HomeController extends FrontendController
       $app = new Application(config('wechat'));
       $js = $app->js;
 
-      $voices = array("startRecord","stopRecord","onVoiceRecordEnd","playVoice","pauseVoice","stopVoice","onVoicePlayEnd","uploadVoice","downloadVoice",);
+      $voices = array("startRecord","stopRecord","onVoiceRecordEnd","playVoice","pauseVoice","stopVoice","onVoicePlayEnd","uploadVoice","downloadVoice");
 
-      $jssdk = '<script type="text/javascript" charset="utf-8">wx.config('.$js->config($voices), true).');</script>';
+      $jssdk = '<script type="text/javascript" charset="utf-8">wx.config('.$js->config($voices, true).');</script>';
       return view('Frontend.uploadvoice', compact('jssdk'));
     }
 
