@@ -7,11 +7,11 @@
   </style>
 @endsection
 @section('content')
-{{-- <div class="img-box"> --}}
-  {{-- <img src="/img/1.png"/>
-  <img src="/img/1.png"/>
-  <img src="/img/1.png"/> --}}
-{{-- </div> --}}
+<div class="audio-box">
+  @if ($box->voice)
+    <audio src="{{Storage::url($box->voice)}}"></audio>
+  @endif
+</div>
 <div class="upload-btn">
   <button class="button-upload-voice btn btn-default btn-sm hide"><i class="fa fa-cloud-upload"></i> <span class="text">上传语音</span></button>
   <button class="button-start-voice btn btn-default btn-sm"><i class="fa fa-file-audio-o"></i> <span class="text">开始录制</span></button>
@@ -123,6 +123,8 @@ $(".button-upload-voice").on('touchstart', function() {
               data: {'media_id':res.serverId},
               dataType: 'json',
               success: function(res) {
+                var html = '<audio src="'+res+'">您的浏览器不支持 audio 标签。</audio>';
+                $(".audio-box").html(html);
                 layer.closeAll();
                 layer.open({
                   shade: true,

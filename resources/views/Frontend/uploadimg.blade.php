@@ -39,12 +39,12 @@ $(function() {
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
       success: function(res) {
-        $(".button-upload-img").find('text').text('开始上传(已选择' + res.localIds.length + ' 张图片)');
+        $(".button-upload-img").find('.text').text('开始上传(已选择' + res.localIds.length + ' 张图片)');
         //alert('已选择 ' + res.localIds.length + ' 张图片');
         images.localIds = res.localIds;
         var imghtml = '';
         for(var j=0; j<res.localIds.length; j++) {
-          imghtml += '<img src="'+res.localIds[i]+'" width="100" height="100"/>';
+          imghtml += '<img src="'+res.localIds[j]+'" width="100" height="100"/>';
         }
         $(".img-box").html(imghtml);
         if (res.localIds.length == 0) {

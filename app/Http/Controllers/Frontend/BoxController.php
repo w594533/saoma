@@ -110,6 +110,7 @@ class BoxController extends FrontendController
         $media_id = $request->media_id;
         @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
         $filename = md5(md5(time().rand(1,9999)));
+        $last_filename = $filename;
 
         $box = session('ws.box');
         //删除之前的视频文件
@@ -117,11 +118,17 @@ class BoxController extends FrontendController
           @unlink(storage_path('app/public').'/'.$box->voice);
         }
 
+        $source_voice = storage_path('app/public').'/upload/'.$user->id.'/'.$filename;
         $result_file = $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename);
-        $file = 'upload/'.$user->id.'/'.$result_file;
+        $dest_voice = storage_path('app/public').'/upload/'.$user->id.'/'.$last_filename.".mp3";
+
+        //语音文件转换
+        // exec('ffmpeg -i 1.amr 1.mp3');
+        exec('ffmpeg -i '.$source_voice.' '.$dest_voice);
+        $file = 'upload/'.$user->id.'/'.$last_filename.".mp3";
         $box->voice = $file;
         $box->save();
-        return response()->json($file, 200);
+        return response()->json(Storage::url($file), 200);
     }
 
     public function showuploadtext()
