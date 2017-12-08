@@ -79,8 +79,8 @@ class BoxController extends FrontendController
 	    @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
       foreach ($media_ids as $key => $media_id) {
         $filename = md5(md5(time().rand(1,9999)));
-        $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename.".jpg");
-        $files[] = 'upload/'.$user->id.'/'.$filename.'.jpg';
+        $result_file = $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename);
+        $files[] = 'upload/'.$user->id.'/'.$result_file;
       }
 
       $box = session('ws.box');
@@ -117,8 +117,8 @@ class BoxController extends FrontendController
           @unlink(storage_path('app/public').'/'.$box->voice);
         }
 
-        $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename);
-        $file = 'upload/'.$user->id.'/'.$filename;
+        $result_file = $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename);
+        $file = 'upload/'.$user->id.'/'.$result_file;
         $box->voice = $file;
         $box->save();
         return response()->json($file, 200);

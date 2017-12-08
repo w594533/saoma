@@ -18,7 +18,7 @@ class CreateBoxesTable extends Migration
             $table->string('voice')->nullable()->comment('语音');
             $table->json('image')->nullable()->comment('图片');
             $table->text('body')->nullable()->comment('文字');
-            $table->json('video')->nullable()->comment('视频');
+            $table->string('video')->nullable()->comment('视频');
             $table->string('qrcode')->nullable()->comment('二维码');
             $table->tinyInteger('status')->default(1)->comment('1:待使用2:已使用');
             $table->integer('user_id')->unsigned()->nullable()->comment('分类Id');
