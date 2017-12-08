@@ -25,16 +25,16 @@
   <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> 返回</button>
 </div>
 <div class="note">
-    <span class="red">*允许格式：.mp4, .wma, .rmvb, .rm, .flash</span>
+    <span class="red">*允许格式：.mp4</span>
     <span class="red">*大小：30M</span>
 </div>
 <script>
 $('#upload').Huploadify({
     auto:true,
-    fileTypeExts:'*.jpg',
+    fileTypeExts:'*.mp4',
     multi:true,
     formData:{_token:$('input[name="_token"]').val()},
-    fileSizeLimit:10*1024,
+    fileSizeLimit:30*1024,
     showUploadedPercent:true,
     showUploadedSize:true,
     removeTimeout:9999999,

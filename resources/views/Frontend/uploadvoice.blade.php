@@ -13,12 +13,12 @@
   <img src="/img/1.png"/> --}}
 {{-- </div> --}}
 <div class="upload-btn">
-  <button class="button-upload-voice btn btn-default btn-sm hide"><i class="fa fa-cloud-upload"></i> 上传语音</button>
-  <button class="button-start-voice btn btn-default btn-sm"><i class="fa fa-file-audio-o"></i> 开始录制</button>
-  <button class="button-stop-voice btn btn-default btn-sm hide"><i class="fa fa-stop"></i> 停止录制</button>
-  <button class="button-play-voice btn btn-default btn-sm hide"><i class="fa fa-play-circle-o"></i> 播放</button>
-  <button class="button-pause-voice btn btn-default btn-sm hide"><i class="fa fa-pause-circle-o"></i> 暂停</button>
-  <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> 返回</button>
+  <button class="button-upload-voice btn btn-default btn-sm hide"><i class="fa fa-cloud-upload"></i> <span class="text">上传语音</span></button>
+  <button class="button-start-voice btn btn-default btn-sm"><i class="fa fa-file-audio-o"></i> <span class="text">开始录制</span></button>
+  <button class="button-stop-voice btn btn-default btn-sm hide"><i class="fa fa-stop"></i> <span class="text">停止录制</span></button>
+  <button class="button-play-voice btn btn-default btn-sm hide"><i class="fa fa-play-circle-o"></i> <span class="text">播放</span></button>
+  <button class="button-pause-voice btn btn-default btn-sm hide"><i class="fa fa-pause-circle-o"></i> <span class="text">暂停</span></button>
+  <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> <span class="text">返回</span></button>
 </div>
 <div class="note">
     <span class="red">*最多录制一分钟语音，超过一分钟会自动停止</span>
@@ -40,7 +40,7 @@ $('.button-start-voice').on('touchstart', function(event){
       $(".button-play-voice").addClass("hide");
       $(".button-pause-voice").addClass("hide");
       $(".button-stop-voice").removeClass("hide");
-      $(".button-start-voice").attr("disabled", "disabled").text('正在录音...');
+      $(".button-start-voice").attr("disabled", "disabled").find(".text").text('正在录音...');
         wx.startRecord({
             success: function(){
                 localStorage.rainAllowRecord = 'true';
@@ -70,7 +70,7 @@ $('.button-stop-voice').on('touchstart', function(event){
       $(".button-play-voice").removeClass("hide");
       $(".button-pause-voice").removeClass("hide");
       $(".button-stop-voice").addClass("hide");
-        $(".button-start-voice").attr("disabled", "").text('重新录制');
+        $(".button-start-voice").attr("disabled", "").find(".text").text('重新录制');
         wx.stopRecord({
           success: function (res) {
             voice.localId = res.localId;
@@ -90,7 +90,7 @@ wx.onVoiceRecordEnd({
         $(".button-play-voice").removeClass("hide");
         $(".button-pause-voice").removeClass("hide");
         $(".button-stop-voice").addClass("hide");
-        $(".button-start-voice").attr("disabled", "").text('重新录制');
+        $(".button-start-voice").attr("disabled", "").find(".text").text('重新录制');
         voice.localId = res.localId;
     }
 });
@@ -99,7 +99,7 @@ wx.onVoiceRecordEnd({
 $(".button-play-voice").on('touchstart', function() {
   alert(JSON.stringify(voice));
   $(".button-stop-voice").addClass("hide");
-  $(".button-start-voice").attr("disabled", "").text('重新录制');
+  $(".button-start-voice").attr("disabled", "").find(".text").text('重新录制');
   $(".button-pause-voice").removeClass("hide");
   wx.playVoice({
     localId: voice.localId // 需要暂停的音频的本地ID，由stopRecord接口获得
@@ -111,7 +111,7 @@ $(".button-upload-voice").on('touchstart', function() {
   //调用微信的上传录音接口把本地录音先上传到微信的服务器
     //不过，微信只保留3天，而我们需要长期保存，我们需要把资源从微信服务器下载到自己的服务器
     layer.open({  type: 2,content: '上传中' });
-    $(".button-upload-voice").attr("disabled", "disabled").text('上传中...');
+    $(".button-upload-voice").attr("disabled", "disabled").find(".text").text('上传中...');
     wx.uploadVoice({
         localId: voice.localId, // 需要上传的音频的本地ID，由stopRecord接口获得
         // isShowProgressTips: 1, // 默认为1，显示进度提示
@@ -130,7 +130,7 @@ $(".button-upload-voice").on('touchstart', function() {
                   skin: 'msg',
                   time: 2 //2秒后自动关闭
                 });
-                $(".button-upload-voice").attr("disabled", "").addClass("hide").text('上传语音');
+                $(".button-upload-voice").attr("disabled", "").addClass("hide").find(".text").text('上传语音');
                 alert(res);
               },
         			error: function(err) {
