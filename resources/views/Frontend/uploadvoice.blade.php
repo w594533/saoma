@@ -2,7 +2,7 @@
 @section('css')
   <style>
   .note {text-align: center; color: red; margin: 10px 0; font-size: 12px;}
-  .upload-btn button {display: block; min-width: 100px; margin: 10px auto;}
+  .upload-btn button {display: block; min-width: 120px; margin: 10px auto;}
   .upload-btn .hide {display: none;}
   </style>
 @endsection
@@ -13,11 +13,12 @@
   <img src="/img/1.png"/> --}}
 {{-- </div> --}}
 <div class="upload-btn">
-  <button class="button-upload-voice hide">上传语音</button>
-  <button class="button-start-voice">开始录制</button>
-  <button class="button-stop-voice hide">停止录制</button>
-  <button class="button-play-voice hide">播放</button>
-  <button class="button-pause-voice hide">暂停</button>
+  <button class="button-upload-voice btn btn-default btn-sm hide"><i class="fa fa-cloud-upload"></i> 上传语音</button>
+  <button class="button-start-voice btn btn-default btn-sm"><i class="fa fa-file-audio-o"></i> 开始录制</button>
+  <button class="button-stop-voice btn btn-default btn-sm hide"><i class="fa fa-stop"></i> 停止录制</button>
+  <button class="button-play-voice btn btn-default btn-sm hide"><i class="fa fa-play-circle-o"></i> 播放</button>
+  <button class="button-pause-voice btn btn-default btn-sm hide"><i class="fa fa-pause-circle-o"></i> 暂停</button>
+  <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> 返回</button>
 </div>
 <div class="note">
     <span class="red">*最多录制一分钟语音，超过一分钟会自动停止</span>
@@ -122,12 +123,14 @@ $(".button-upload-voice").on('touchstart', function() {
               data: {'media_id':res.serverId},
               dataType: 'json',
               success: function(res) {
+                layer.closeAll();
                 layer.open({
                   shade: true,
                   content: '上传成功',
                   skin: 'msg',
                   time: 2 //2秒后自动关闭
                 });
+                $(".button-upload-voice").attr("disabled", "").addClass("hide").text('上传语音');
                 alert(res);
               },
         			error: function(err) {
@@ -138,5 +141,9 @@ $(".button-upload-voice").on('touchstart', function() {
         }
     });
 })
+
+$(".button-upload-back").on('click', function() {
+  location.href="{{route('home')}}";
+});
 </script>
 @endsection

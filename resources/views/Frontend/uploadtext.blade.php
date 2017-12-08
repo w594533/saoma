@@ -15,7 +15,7 @@
   </div>
   <div class="upload-btn">
     <button class="save btn btn-default btn-sm"><i class="fa fa-save"></i> 保存</button>
-    <button class="back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> 返回</button>
+    <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> 返回</button>
   </div>
 <script>
 $(".save").on('touchstart', function() {
@@ -42,5 +42,9 @@ $(".save").on('touchstart', function() {
     })
   }
 })
+
+$(".button-upload-back").on('click', function() {
+  location.href="{{route('home')}}";
+});
 </script>
 @endsection

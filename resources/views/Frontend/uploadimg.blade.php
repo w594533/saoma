@@ -2,6 +2,7 @@
 @section('css')
   <style>
   .upload-btn .hide {display: none;}
+  .upload-btn button {display: block; min-width: 120px; margin: 10px auto;}
   </style>
 @endsection
 @section('content')
@@ -12,7 +13,7 @@
 </div>
 <div class="upload-btn">
   <button class="button-select-img btn btn-default btn-sm"><i class="fa fa-save"></i> 选择图片</button>
-  <button class="button-upload-img btn btn-default btn-sm hide"><i class="fa fa-save"></i> 开始上传</button>
+  <button class="button-upload-img btn btn-default btn-sm"><i class="fa fa-cloud-upload"></i> 开始上传</button>
   <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> 返回</button>
 </div>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
@@ -67,7 +68,7 @@ function upload(){
   var serverIds = [];
   wx.uploadImage({
     localId: images.localIds[i],
-    isShowProgressTips: 1,
+    // isShowProgressTips: 1,
     success: function(res) {
       i++;
       //alert('已上传：' + i + '/' + length);

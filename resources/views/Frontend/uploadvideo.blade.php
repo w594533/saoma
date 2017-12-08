@@ -6,20 +6,27 @@
     .content {width: auto; padding: 20px 10px;}
     .note {text-align: left; color: red; margin: 10px 0; font-size: 12px;}
     .note .red {display: block; padding:5px;}
-    .content .uploadify-button {width: 100px; margin: 12px auto; display: block; text-align: center;}
+    .content .uploadify-button {width: 120px; margin: 12px auto; display: block; text-align: center; font-weight: normal;}
     .uploadify-progress {display: block; width: 100%;}
 
     .up_filename, .progressnum, .delfilebtn, .uploadbtn, .up_percent {display: inline-block;font-size: 14px; margin-left: 0; margin-right: 20px; margin-top: 10px; color: #fff;}
     .up_filename {display: block; margin-top: 10px;}
     .uploadbtn, .delfilebtn {display: none;}
+    .upload-btn button {display: block; min-width: 120px; margin: 10px auto;}
   </style>
 @endsection
 @section('content')
   {{ csrf_field() }}
+<div class="video-box">
+
+</div>
 <div id="upload"></div>
+<div class="upload-btn">
+  <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> 返回</button>
+</div>
 <div class="note">
     <span class="red">*允许格式：.mp4, .wma, .rmvb, .rm, .flash</span>
-    <span class="red">*大小：10M</span>
+    <span class="red">*大小：30M</span>
 </div>
 <script>
 $('#upload').Huploadify({
@@ -31,7 +38,7 @@ $('#upload').Huploadify({
     showUploadedPercent:true,
     showUploadedSize:true,
     removeTimeout:9999999,
-    'buttonText' : '上传视频',
+    'buttonText' : '<i class="fa fa-cloud-upload"></i> 上传视频',
     uploader:'{{route("uploadvideo")}}',
     uploadLimit: 1,
     onUploadStart:function(file){
@@ -45,15 +52,12 @@ $('#upload').Huploadify({
     onUploadComplete:function(file){
         layer.closeAll();
         layer.open({
-          content: '上传完成'
-          ,btn: ['重新上传', '返回']
-          ,yes: function(index){
-            location.reload();
-            layer.close(index);
-          },no: function() {
-            location.href="{{route('home')}}";
-          }
+          shade: true,
+          content: '上传成功',
+          skin: 'msg',
+          time: 2 //2秒后自动关闭
         });
+        alert(file);
         console.log(file.name+'上传完成');
     },
     onCancel:function(file){
@@ -71,6 +75,9 @@ $('#upload').Huploadify({
     onQueueComplete:function(queueData){
         console.log('队列中的文件全部上传完成',queueData);
     }
+});
+$(".button-upload-back").on('click', function() {
+    location.href="{{route('home')}}";
 });
 </script>
 @endsection
