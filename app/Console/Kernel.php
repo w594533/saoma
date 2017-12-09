@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Storage;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,6 +27,12 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        //每天午夜执行删除无效的压缩包
+        $schedule->call(function () {
+            $files = Storage::allFiles('public/zip/');
+            Storage::delete($files);
+        })->daily();
+
         $schedule->command('boxqrcode:generate')->everyMinute()->withoutOverlapping();
     }
 

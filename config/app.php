@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Overtrue\LaravelWeChat\ServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Chumper\Zipper\ZipperServiceProvider::class,
 
     ],
 
@@ -229,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'EasyWeChat' => Overtrue\LaravelWechat\Facade::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Zipper' => Chumper\Zipper\Zipper::class,
 
     ],
 

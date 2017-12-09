@@ -127,7 +127,13 @@ class BoxController extends Controller
                   return '已使用';
                 }
             })->badge('green')->sortable();
-            $grid->Qrcode('二维码')->image('', 100, 100);
+            $grid->qrcode('二维码')->display(function ($qrcode) {
+              if ($qrcode && !is_null($qrcode)) {
+                return '<img src="'.\Storage::url($qrcode).'" width="50" height="50"/>';
+              } else {
+                return '';
+              }
+            });
 
             $grid->created_at('创建时间')->sortable();
             $grid->updated_at('更新时间');
