@@ -14,18 +14,6 @@ class FrontendController extends BaseController
 
     public function __construct()
     {
-      $oauth_user = session('wechat.oauth_user'); // 拿到授权用户资料
-      $user = User::where('openid', $oauth_user->id)->first();
-      if (!$user) {
-        $user = new User;
-        $user->openid = $oauth_user->id;
-        $user->name = $oauth_user->name;
-        $user->gender = $oauth_user->original['sex'];
-        $user->email = $oauth_user->email;
-        $user->avatar = $oauth_user->avatar;
-        $user->save();
-      }
-      session(['ws.user' => $user]);
     }
 
     protected function _check_box()

@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['web', 'wechat.oauth']], function () {
+Route::group(['middleware' => ['web', 'wechat.oauth', 'ws.oauth']], function () {
 
     Route::get('/home', 'Frontend\HomeController@show')->name('home');
     Route::get('/box/{box}', 'Frontend\BoxController@show')->name('box');
