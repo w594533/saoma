@@ -1,8 +1,13 @@
 .item {margin-bottom: 20px;}
-.solign {text-align: left; margin-bottom: 3px;}
+.solign {text-align: left; margin-bottom: 10px; border-bottom:1px solid #FBC815;}
 .solign img {width: 60px; display: block;}
-body {padding: 0; background: #85BBDB !important; height: auto !important;}
+.solign h3 {text-align: center; color: #000; margin: 0;}
+.solign h3 span {border-bottom: 2px solid #FBC815; display: inline-block; padding-bottom: 5px;}
+body {padding: 0; background: none !important; height: auto !important;}
 .container {padding: 10px;}
 .content {background: none; padding: 0;}
 
-.text-box .inner{text-align: left; color: #fff; line-height: 22px;}
+.text-box .inner{text-align: left; color: #7C7C7C; line-height: 22px;}
+
+.swiper-slide {min-height: 200px;}
+.swiper-slide img {width: 100%; height: auto;}

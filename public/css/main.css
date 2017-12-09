@@ -1,5 +1,17 @@
-body {
+@font-face {
+    font-family: 'FZLanTingHeiS-DB1-GB';
+    src: url('http://site-share.oss-cn-beijing.aliyuncs.com/font/FZLTZCHJW--GB1-0.eot');
+    src: url('http://site-share.oss-cn-beijing.aliyuncs.com/font/FZLTZCHJW--GB1-0.eot?#iefix') format('embedded-opentype'),
+    url('http://site-share.oss-cn-beijing.aliyuncs.com/font/FZLTZCHJW--GB1-0.woff2') format('woff2'),
+    url('http://site-share.oss-cn-beijing.aliyuncs.com/font/FZLTZCHJW--GB1-0.woff') format('woff'),
+    url('http://site-share.oss-cn-beijing.aliyuncs.com/font/FZLTZCHJW--GB1-0.ttf') format('truetype'),
+    url('http://site-share.oss-cn-beijing.aliyuncs.com/font/FZLTZCHJW--GB1-0.svg#FZLTZCHJW--GB1-0') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
+body {
+    font-family: 'FZLanTingHeiS-DB1-GB' !important;
     background: #338DC3;
 }
 .container {
