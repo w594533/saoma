@@ -1,0 +1,8 @@
+.item {margin-bottom: 20px;}
+.solign {text-align: left; margin-bottom: 3px;}
+.solign img {width: 60px; display: block;}
+body {padding: 0; background: #85BBDB !important; height: auto !important;}
+.container {padding: 10px;}
+.content {background: none; padding: 0;}
+
+.text-box .inner{text-align: left; color: #fff; line-height: 22px;}

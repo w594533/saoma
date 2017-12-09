@@ -21,6 +21,7 @@ class BoxController extends FrontendController
       $user = session('ws.user');
 
       $box = Box::find($box->id);
+      //return view('Frontend.view', compact('box'));
       if (!$box->user_id) {
         $box->user_id = $user->id;
         $box->save();
@@ -33,7 +34,7 @@ class BoxController extends FrontendController
         return redirect()->route('home');
       } else {
         //不一致，查看资料
-
+        return view('Frontend.view', compact('box'));
       }
     }
 
@@ -45,7 +46,7 @@ class BoxController extends FrontendController
       $js = $app->js;
 
       $jssdk = '<script type="text/javascript" charset="utf-8">wx.config('.$js->config(array('uploadImage', 'chooseImage'), true).');</script>';
-      $box = session('ws.box');
+      $box = Box::find(session('ws.box')->id);
       $images = json_decode($box->image)?json_decode($box->image):[];
       return view('Frontend.uploadimg', compact('jssdk', 'images'));
     }
@@ -60,7 +61,7 @@ class BoxController extends FrontendController
       $voices = array("startRecord","stopRecord","onVoiceRecordEnd","playVoice","pauseVoice","stopVoice","onVoicePlayEnd","uploadVoice","downloadVoice");
 
       $jssdk = '<script type="text/javascript" charset="utf-8">wx.config('.$js->config($voices, true).');</script>';
-      $box = session('ws.box');
+      $box = Box::find(session('ws.box')->id);
       return view('Frontend.uploadvoice', compact('jssdk','box'));
     }
 
@@ -83,7 +84,7 @@ class BoxController extends FrontendController
         $files[] = 'upload/'.$user->id.'/'.$result_file;
       }
 
-      $box = session('ws.box');
+      $box = Box::find(session('ws.box')->id);
       //删除之前的文件
       if ($box->image) {
         foreach (json_decode($box->image) as $image) {
@@ -112,14 +113,13 @@ class BoxController extends FrontendController
         $filename = md5(md5(time().rand(1,9999)));
         $last_filename = $filename;
 
-        $box = session('ws.box');
+        $box = Box::find(session('ws.box')->id);
         //删除之前的视频文件
         if ($box->voice && file_exists(storage_path('app/public').'/'.$box->voice)) {
           @unlink(storage_path('app/public').'/'.$box->voice);
         }
-
-        $source_voice = storage_path('app/public').'/upload/'.$user->id.'/'.$filename;
         $result_file = $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename);
+        $source_voice = storage_path('app/public').'/upload/'.$user->id.'/'.$result_file;
         $dest_voice = storage_path('app/public').'/upload/'.$user->id.'/'.$last_filename.".mp3";
 
         //语音文件转换
@@ -128,6 +128,9 @@ class BoxController extends FrontendController
         $file = 'upload/'.$user->id.'/'.$last_filename.".mp3";
         $box->voice = $file;
         $box->save();
+
+        //删除转换前的文件
+        @unlink($source_voice);
         return response()->json(Storage::url($file), 200);
     }
 
@@ -135,14 +138,14 @@ class BoxController extends FrontendController
     {
       $this->_check_box();
 
-      $box = session('ws.box');
+      $box = Box::find(session('ws.box')->id);
       return view('Frontend.uploadtext', compact('box'));
     }
 
     public function uploadtext(Request $request)
     {
       $this->_check_box();
-      $box = session('ws.box');
+      $box = Box::find(session('ws.box')->id);
       $text = $request->body;
       $box->body = $text;
       $box->save();
@@ -152,7 +155,7 @@ class BoxController extends FrontendController
     public function showuploadvideo()
     {
       $this->_check_box();
-      $box = session('ws.box');
+      $box = Box::find(session('ws.box')->id);
       return view('Frontend.uploadvideo', compact('box'));
     }
 
@@ -161,7 +164,7 @@ class BoxController extends FrontendController
       $this->_check_box();
 
       if ($request->hasFile('file') && $request->file('file')->isValid()) {
-        $box = session('ws.box');
+        $box = Box::find(session('ws.box')->id);
         //删除之前的视频文件
         if ($box->video && file_exists(storage_path('app/public').'/'.$box->video)) {
           @unlink(storage_path('app/public').'/'.$box->video);
@@ -177,8 +180,10 @@ class BoxController extends FrontendController
         //     'extension' => $extension,
         //     'store_result' => $store_result
         // ];
-        $box->video = 'upload/'.$user->id.'/'.$filename.'.'.$extension;
+        $save_path = 'upload/'.$user->id.'/'.$filename.'.'.$extension;
+        $box->video = $save_path;
         $box->save();
+        return response()->json(Storage::url($save_path), 200);
       }
       exit('未获取到上传文件或上传过程出错');
     }

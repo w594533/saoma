@@ -1,5 +1,10 @@
 @extends('Frontend.layouts.default')
-
+@section('css')
+  <style>
+    .slogin a {color: #fff; text-decoration: none;}
+    .slogin a span {font-size: 12px;}
+  </style>
+@endsection
 @section('content')
 <div class="box">
   <div class="item">
@@ -8,7 +13,14 @@
         <img src="/img/1.png"/>
       </div>
       <div class="button">
-        <div class="slogin"><a href="{{route('showuploadimg')}}">上传图片</a></div>
+        <div class="slogin">
+          <a href="{{route('showuploadimg')}}">
+          上传图片
+          @if ($box->image)
+            <span>(已上传)</span>
+          @endif
+          </a>
+      </div>
       </div>
     </div>
     <div class="box-item fr">
@@ -16,7 +28,14 @@
         <img src="/img/2.png"/>
       </div>
       <div class="button">
-        <div class="slogin"><a href="{{route('showuploadvideo')}}">上传视频</a></div>
+        <div class="slogin">
+          <a href="{{route('showuploadvideo')}}">
+            上传视频
+            @if ($box->video)
+              <span>(已上传)</span>
+            @endif
+          </a>
+        </div>
       </div>
     </div>
     <div class="clear"></div>
@@ -27,7 +46,14 @@
         <img src="/img/3.png"/>
       </div>
       <div class="button">
-        <div class="slogin"><a href="{{route('showuploadvoice')}}">录制语音</a></div>
+        <div class="slogin">
+          <a href="{{route('showuploadvoice')}}">
+            录制语音
+            @if ($box->voice)
+              <span>(已上传)</span>
+            @endif
+          </a>
+        </div>
       </div>
     </div>
     <div class="box-item fr">
@@ -35,7 +61,14 @@
         <img src="/img/4.png"/>
       </div>
       <div class="button">
-        <div class="slogin"><a href="{{route('showuploadtext')}}">输入文字</a></div>
+        <div class="slogin">
+          <a href="{{route('showuploadtext')}}">
+            输入文字
+            @if ($box->body)
+              <span>(已输入)</span>
+            @endif
+          </a>
+        </div>
       </div>
     </div>
     <div class="clear"></div>

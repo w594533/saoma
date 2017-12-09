@@ -2,6 +2,10 @@
 @section('css')
   <script src="/js/jquery.Huploadify.js"></script>
   <link rel="stylesheet" href="/css/Huploadify.css">
+  <link rel="stylesheet" href="/css/plyr/plyr.css">
+  <link rel="stylesheet" href="/css/plyr/demo.css">
+  <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/avenir-medium.woff2">
+  <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/avenir-bold.woff2">
   <style>
     .content {width: auto; padding: 20px 10px;}
     .note {text-align: left; color: red; margin: 10px 0; font-size: 12px;}
@@ -18,7 +22,11 @@
 @section('content')
   {{ csrf_field() }}
 <div class="video-box">
-
+  @if ($box->video)
+    <video controls>
+      <source src="{{ Storage::url($box->video) }}" type="video/mp4">
+    </video>
+  @endif
 </div>
 <div id="upload"></div>
 <div class="upload-btn">
@@ -28,6 +36,13 @@
     <span class="red">*允许格式：.mp4</span>
     <span class="red">*大小：30M</span>
 </div>
+    <script src="/js/plyr/plyr.js"></script>
+    <script src="/js/plyr/demo.js"></script>
+    <script src="https://cdn.rangetouch.com/1.0.1/rangetouch.js" async></script>
+    <script src="https://cdn.shr.one/1.0.1/shr.js"></script>
+    <script>
+        if (window.shr) { window.shr.setup({ count: { classname: 'btn__count' } }); }
+    </script>
 <script>
 $('#upload').Huploadify({
     auto:true,
@@ -57,7 +72,7 @@ $('#upload').Huploadify({
           skin: 'msg',
           time: 2 //2秒后自动关闭
         });
-        alert(file);
+        location.reload();
         console.log(file.name+'上传完成');
     },
     onCancel:function(file){

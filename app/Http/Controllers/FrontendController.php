@@ -36,6 +36,9 @@ class FrontendController extends BaseController
       } else {
         $user = session('ws.user');
         $box = session('ws.box');
+        if (!$box->id) {
+          abort(403,'对不起，您无权访问该页面！');
+        }
         if ($box->user_id != $user->id) {
           abort(403,'对不起，您无权访问该页面！');
         }

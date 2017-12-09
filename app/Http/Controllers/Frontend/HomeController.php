@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\FrontendController;
 use EasyWeChat\Foundation\Application;
 use App\Http\Middleware\CheckBox;
+use App\Models\Box;
 
 
 class HomeController extends FrontendController
@@ -21,7 +22,8 @@ class HomeController extends FrontendController
 
       $oauth_user = session('wechat.oauth_user'); // 拿到授权用户资料
       //dd(session('ws.user'));
-      return view('Frontend.home');
+      $box = Box::find(session('ws.box')->id);
+      return view('Frontend.home', compact('box'));
     }
 
 }

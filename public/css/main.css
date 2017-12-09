@@ -49,12 +49,14 @@ body {
 .upload-btn button, .content .uploadify-button {
   display: inline-block;
   color: #fff;
-  font-size: 20px;
+  font-size: 16px;
   background: #0071B4;
   padding: 5px 10px;
   text-decoration: none;
   border: none !important;
   border-radius: 4px;
+  font-weight: normal;
+  text-shadow: none;
 }
  .content .uploadify-button:hover {
   background: #0071B4;

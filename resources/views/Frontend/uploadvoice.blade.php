@@ -1,22 +1,31 @@
 @extends('Frontend.layouts.default')
 @section('css')
+    <link rel="stylesheet" href="/css/plyr/plyr.css">
+    <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/avenir-medium.woff2">
+    <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/avenir-bold.woff2">
   <style>
   .note {text-align: center; color: red; margin: 10px 0; font-size: 12px;}
   .upload-btn button {display: block; min-width: 120px; margin: 10px auto;}
   .upload-btn .hide {display: none;}
+  .audio-box{width:300px; margin:0px auto 10px auto}
+  @media only screen and (min-width: 420px) {
+  	.audio-box{width:500px; margin:60px auto 10px auto}
+  }
+  .plyr {border-radius: 8px;}
   </style>
 @endsection
+
 @section('content')
 <div class="audio-box">
   @if ($box->voice)
-    <audio src="{{Storage::url($box->voice)}}"></audio>
+    <audio src="{{Storage::url($box->voice)}}" preload="auto" controls></audio>
   @endif
 </div>
 <div class="upload-btn">
-  <button class="button-upload-voice btn btn-default btn-sm hide"><i class="fa fa-cloud-upload"></i> <span class="text">上传语音</span></button>
+  <button class="button-upload-voice btn btn-default btn-sm hide"><i class="fa fa-cloud-upload"></i> <span class="text">上传语音(已录制)</span></button>
   <button class="button-start-voice btn btn-default btn-sm"><i class="fa fa-file-audio-o"></i> <span class="text">开始录制</span></button>
   <button class="button-stop-voice btn btn-default btn-sm hide"><i class="fa fa-stop"></i> <span class="text">停止录制</span></button>
-  <button class="button-play-voice btn btn-default btn-sm hide"><i class="fa fa-play-circle-o"></i> <span class="text">播放</span></button>
+  <button class="button-play-voice btn btn-default btn-sm hide"><i class="fa fa-play-circle-o"></i> <span class="text">试听</span></button>
   <button class="button-pause-voice btn btn-default btn-sm hide"><i class="fa fa-pause-circle-o"></i> <span class="text">暂停</span></button>
   <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> <span class="text">返回</span></button>
 </div>
@@ -26,6 +35,13 @@
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
 {!! $jssdk !!}
 
+    <script src="/js/plyr/plyr.js"></script>
+    <script src="/js/plyr/demo.js"></script>
+    <script src="https://cdn.rangetouch.com/1.0.1/rangetouch.js" async></script>
+    <script src="https://cdn.shr.one/1.0.1/shr.js"></script>
+    <script>
+        if (window.shr) { window.shr.setup({ count: { classname: 'btn__count' } }); }
+    </script>
 <script>
 var recordTimer;
 var voice = {
@@ -54,7 +70,6 @@ $('.button-start-voice').on('touchstart', function(event){
 
 //结束录音
 $('.button-stop-voice').on('touchstart', function(event){
-    alert('123');
     event.preventDefault();
     END = new Date().getTime();
 
@@ -65,7 +80,6 @@ $('.button-stop-voice').on('touchstart', function(event){
         //小于300ms，不录音
         clearTimeout(recordTimer);
     }else{
-      alert('789');
       $(".button-upload-voice").removeClass("hide");
       $(".button-play-voice").removeClass("hide");
       $(".button-pause-voice").removeClass("hide");
@@ -97,7 +111,7 @@ wx.onVoiceRecordEnd({
 
 //播放
 $(".button-play-voice").on('touchstart', function() {
-  alert(JSON.stringify(voice));
+  //alert(JSON.stringify(voice));
   $(".button-stop-voice").addClass("hide");
   $(".button-start-voice").attr("disabled", "").find(".text").text('重新录制');
   $(".button-pause-voice").removeClass("hide");
@@ -123,8 +137,7 @@ $(".button-upload-voice").on('touchstart', function() {
               data: {'media_id':res.serverId},
               dataType: 'json',
               success: function(res) {
-                var html = '<audio src="'+res+'">您的浏览器不支持 audio 标签。</audio>';
-                $(".audio-box").html(html);
+                $('audio').attr("src", res);
                 layer.closeAll();
                 layer.open({
                   shade: true,
