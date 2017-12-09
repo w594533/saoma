@@ -22,7 +22,6 @@ class CheckBox
           $user = new User;
           $user->openid = $oauth_user->id;
           $user->name = $oauth_user->name;
-          $user->gender = $oauth_user->original['sex'];
           $user->email = $oauth_user->email;
           $user->avatar = $oauth_user->avatar;
           $user->save();
