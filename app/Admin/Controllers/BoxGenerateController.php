@@ -60,11 +60,41 @@ class BoxGenerateController extends Controller
         $datas = array();
         if (intval($request->num) > 0) {
           for($i=0;$i<intval($request->num);$i++){
-            $datas[$i] = array('status' => 1);
+            $datas[$i] = [
+              'created_at' => date("Y-m-d H:i:s"),
+              'updated_at' => date("Y-m-d H:i:s"),
+            ];
           }
           DB::table('boxes')->insert($datas);
         }
         return back()->with(compact('success'));
+    }
+  }
+
+  /**
+   * 文件下载
+   * @param  Box    $box [description]
+   * @return [type]      [description]
+   */
+  public function download(Box $box)
+  {
+    if (!$box || ($box && !$box->qrcode)) {
+      $error = new MessageBag([
+          'title'   => '暂无数据'
+      ]);
+      return back()->with(compact('error'));
+    }
+
+    $qrcode = storage_path('app/public').'/'.$box->qrcode;
+    $pathinfo = pathinfo($qrcode);
+    $ext = $pathinfo['extension'];
+    if (file_exists($qrcode)) {
+      return response()->download($qrcode, "qrcode_".date('Ymd')."_".$box->id.".".$ext);
+    } else {
+      $error = new MessageBag([
+          'title'   => '文件不存在'
+      ]);
+      return back()->with(compact('error'));
     }
   }
 }

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/css/view.css">
 @endsection
 @section('js')
-  <script src="/js/swiper.min.js"></script>
+
 @endsection
 @section('content')
 <div class="view-box">
@@ -41,14 +41,7 @@
             @endforeach
           </div>
           <!-- 如果需要分页器 -->
-          {{-- <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-
-          <!-- 如果需要滚动条 -->
-          <div class="swiper-scrollbar"></div> --}}
+          <div class="swiper-pagination"></div>
         </div>
 
       </div>
@@ -66,10 +59,11 @@
     </div>
   @endif
 </div>
+<script src="/js/swiper-3.4.2.jquery.min.js"></script>
 <script>
     $(function() {
       var swiper = new Swiper('.swiper-container', {
-          // pagination : '.swiper-pagination',
+          pagination : '.swiper-pagination',
           autoplay : 5000,
           loop: true,
           autoHeight: true, //高度随内容变化

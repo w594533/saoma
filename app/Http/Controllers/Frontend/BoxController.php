@@ -24,6 +24,7 @@ class BoxController extends FrontendController
       //return view('Frontend.view', compact('box'));
       if (!$box->user_id) {
         $box->user_id = $user->id;
+        $box->status = 2;
         $box->save();
         $request->session()->put('ws.box', $box);
         return redirect()->route('home');

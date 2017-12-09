@@ -11,3 +11,4 @@ body {padding: 0; background: none !important; height: auto !important;}
 
 .swiper-slide {min-height: 200px;}
 .swiper-slide img {width: 100%; height: auto;}
+.swiper-pagination-bullet-active {background: #FBC815;}
