@@ -34,6 +34,9 @@ class Kernel extends ConsoleKernel
         })->daily();
 
         $schedule->command('boxqrcode:generate')->everyMinute()->withoutOverlapping();
+
+        //每月第15天删除上个月 1 至 28/29/30/31号的记录
+        $schedule->command('delete:box')->monthlyOn(27, '00:00');
     }
 
     /**

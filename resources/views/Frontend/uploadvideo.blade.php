@@ -3,7 +3,7 @@
   <script src="/js/jquery.Huploadify.js"></script>
   <link rel="stylesheet" href="/css/Huploadify.css">
   <link rel="stylesheet" href="/css/plyr/plyr.css">
-  <link rel="stylesheet" href="/css/plyr/demo.css">
+  {{-- <link rel="stylesheet" href="/css/plyr/demo.css"> --}}
   <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/avenir-medium.woff2">
   <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/avenir-bold.woff2">
   <style>
@@ -24,7 +24,7 @@
 <div class="video-box">
   @if ($box->video)
     <video controls>
-      <source src="{{ Storage::url($box->video) }}" type="video/mp4">
+      <source src="{{ $video_url }}" type="video/mp4">
     </video>
   @endif
 </div>
@@ -34,7 +34,7 @@
 </div>
 <div class="note">
     <span class="red">*允许格式：.mp4</span>
-    <span class="red">*大小：30M</span>
+    <span class="red">*大小：20M</span>
 </div>
     <script src="/js/plyr/plyr.js"></script>
     <script src="/js/plyr/demo.js"></script>
@@ -49,7 +49,7 @@ $('#upload').Huploadify({
     fileTypeExts:'*.mp4',
     multi:true,
     formData:{_token:$('input[name="_token"]').val()},
-    fileSizeLimit:30*1024,
+    fileSizeLimit:20*1024,
     showUploadedPercent:true,
     showUploadedSize:true,
     removeTimeout:9999999,
@@ -65,7 +65,6 @@ $('#upload').Huploadify({
         console.log(obj);
     },
     onUploadComplete:function(file){
-        alert(JSON.stringify(file));
         layer.closeAll();
         layer.open({
           shade: true,
