@@ -12,12 +12,12 @@ class AdminMenuTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('admin_menu')->delete();
-        
+
         \DB::table('admin_menu')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'parent_id' => 0,
@@ -28,7 +28,7 @@ class AdminMenuTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'parent_id' => 0,
@@ -39,7 +39,7 @@ class AdminMenuTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2017-12-10 05:49:45',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'parent_id' => 2,
@@ -50,7 +50,7 @@ class AdminMenuTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2017-12-10 05:49:57',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 6,
                 'parent_id' => 2,
@@ -61,7 +61,7 @@ class AdminMenuTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2017-12-10 05:50:20',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 8,
                 'parent_id' => 0,
@@ -72,7 +72,7 @@ class AdminMenuTableSeeder extends Seeder
                 'created_at' => '2017-12-10 05:48:56',
                 'updated_at' => '2017-12-10 05:51:33',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 9,
                 'parent_id' => 0,
@@ -84,7 +84,7 @@ class AdminMenuTableSeeder extends Seeder
                 'updated_at' => '2017-12-10 05:53:44',
             ),
         ));
-        
-        
+
+
     }
 }
