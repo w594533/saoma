@@ -34,7 +34,7 @@
 </div>
 <div class="note">
     <span class="red">*允许格式：.mp4</span>
-    <span class="red">*大小：20M</span>
+    <span class="red">*大小：30M</span>
 </div>
     <script src="/js/plyr/plyr.js"></script>
     <script src="/js/plyr/demo.js"></script>
@@ -49,7 +49,7 @@ $('#upload').Huploadify({
     fileTypeExts:'*.mp4',
     multi:true,
     formData:{_token:$('input[name="_token"]').val()},
-    fileSizeLimit:20*1024,
+    fileSizeLimit:30*1024,
     showUploadedPercent:true,
     showUploadedSize:true,
     removeTimeout:9999999,
