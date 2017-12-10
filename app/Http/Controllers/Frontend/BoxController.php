@@ -7,6 +7,7 @@ use App\Http\Controllers\FrontendController;
 use EasyWeChat\Foundation\Application;
 use App\Models\Box;
 use Illuminate\Support\Facades\Storage;
+use App\Services\OSS;
 
 
 class BoxController extends FrontendController
@@ -174,17 +175,24 @@ class BoxController extends FrontendController
 
         $photo = $request->file('file');
         $extension = $photo->extension();
-        @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
+        // @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
         $filename = md5(md5(time().rand(1,9999)));
-        $store_result = $photo->storeAs('public/upload/'.$user->id, $filename.'.'.$extension);
-        // $output = [
-        //     'extension' => $extension,
-        //     'store_result' => $store_result
-        // ];
-        $save_path = 'upload/'.$user->id.'/'.$filename.'.'.$extension;
-        $box->video = $save_path;
-        $box->save();
-        return response()->json(Storage::url($save_path), 200);
+
+        return $photo;
+        // 在外网上传一个文件并指定 options 如：Content-Type 类型
+        // 更多 options 见：https://github.com/johnlui/AliyunOSS/blob/master/src/oss/src/Aliyun/OSS/OSSClient.php#L142-L148
+        $res = OSS::publicUpload('customer-saoma', 'videos/'.$filename.'.'.$extension, $photo, [
+            'ContentType' => 'application/mp4',
+        ]);
+        // $store_result = $photo->storeAs('public/upload/'.$user->id, $filename.'.'.$extension);
+        // // $output = [
+        // //     'extension' => $extension,
+        // //     'store_result' => $store_result
+        // // ];
+        // $save_path = 'upload/'.$user->id.'/'.$filename.'.'.$extension;
+        // $box->video = $save_path;
+        // $box->save();
+        return response()->json($res, 200);
       }
       exit('未获取到上传文件或上传过程出错');
     }

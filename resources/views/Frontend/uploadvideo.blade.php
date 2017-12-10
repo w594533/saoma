@@ -65,6 +65,7 @@ $('#upload').Huploadify({
         console.log(obj);
     },
     onUploadComplete:function(file){
+        alert(JSON.stringify(file));
         layer.closeAll();
         layer.open({
           shade: true,
