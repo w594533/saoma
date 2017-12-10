@@ -34,7 +34,7 @@
 </div>
 <div class="note">
     <span class="red">*允许格式：.mp4</span>
-    <span class="red">*大小：30M</span>
+    <span class="red">*允许最大上传：30M</span>
 </div>
     <script src="/js/plyr/plyr.js"></script>
     <script src="/js/plyr/demo.js"></script>

@@ -74,6 +74,12 @@ class BoxController extends Controller
     protected function grid()
     {
         return Admin::grid(Box::class, function (Grid $grid) {
+            $grid->tools(function ($tools) {
+              $tools->batch(function ($batch) {
+                  $batch->disableDelete();
+              });
+            });
+
             $grid->filter(function($filter){
               $filter->equal('status')->select([''=> '全部', 1 => '待使用', 2 => '已使用']);
             });

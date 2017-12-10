@@ -145,6 +145,8 @@ $(".button-upload-voice").on('touchstart', function() {
                   skin: 'msg',
                   time: 2 //2秒后自动关闭
                 });
+                $(".button-play-voice").addClass("hide");
+                $(".button-pause-voice").addClass("hide");
                 $(".button-upload-voice").attr("disabled", "").addClass("hide").find(".text").text('上传语音');
                 alert(res);
               },
