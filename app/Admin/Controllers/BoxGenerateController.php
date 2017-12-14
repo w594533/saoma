@@ -29,7 +29,7 @@ class BoxGenerateController extends Controller
           $form = new Form();
           $form->action('generate');
 
-          $form->number('num', '数量')->help('每次最多生成30个');
+          $form->number('num', '数量')->help('每次最多生成100个');
 
           $content->row($form->render());
       });
@@ -43,7 +43,7 @@ class BoxGenerateController extends Controller
     // ])->validate();
 
     $validator = Validator::make($request->all(), [
-        'num' => 'required|integer|min:1|max:30'
+        'num' => 'required|integer|min:1|max:100'
     ]);
 
     if ($validator->fails()) {
@@ -89,7 +89,7 @@ class BoxGenerateController extends Controller
     $pathinfo = pathinfo($qrcode);
     $ext = $pathinfo['extension'];
     if (file_exists($qrcode)) {
-      return response()->download($qrcode, "qrcode_".date('Ymd')."_".$box->id.".".$ext);
+      return response()->download($qrcode, date('Ymd', strtotime($box->created_at))."-".$box->id.".".$ext);
     } else {
       $error = new MessageBag([
           'title'   => '文件不存在'

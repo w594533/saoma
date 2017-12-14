@@ -13,7 +13,7 @@ class QrcodeExpoter extends AbstractExporter
     {
 
         // 这段逻辑是从表格数据中取出需要导出的字段
-        $directory = 'public/zip/'.rand(1,9999).date("Ymd");
+        $directory = 'public/zip/'.date("Ymd").'-'.rand(1,9999);
 
         foreach ($this->getData() as $item) {
           $source_qrcode = storage_path('app/public').'/'.$item['qrcode'];

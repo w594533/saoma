@@ -46,7 +46,7 @@ class boxqrcode extends Command
         //生成一个中间有LOGO图片的二维码
         $url = config('app.url')."/box/".$box->id;
         @mkdir(storage_path('app/public/upload/qrcode'), 0777, true);
-        $file = 'upload/qrcode/'.md5(rand(1,9999).time().$box->id).".png";
+        $file = 'upload/qrcode/'.date("Ymd", strtotime($box->created_at)).'-'.$box->id.".png";
         $save_path = storage_path('app/public/').$file;
         $fp=fopen($save_path,"w+");
         QrCode::format('png')->size(500)->merge('/logo.png')->margin(1)->generate($url, $save_path);

@@ -12,6 +12,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Extensions\QrcodeExpoter;
+use App\Admin\Extensions\Tools\ReleasePost;
 
 class BoxController extends Controller
 {
@@ -74,9 +75,15 @@ class BoxController extends Controller
     protected function grid()
     {
         return Admin::grid(Box::class, function (Grid $grid) {
+            $grid->paginate(100);
+            $grid->tools(function ($tools) {
+                $tools->batch(function ($batch) {
+                    $batch->disableDelete();
+                });
+            });
             $grid->tools(function ($tools) {
               $tools->batch(function ($batch) {
-                  $batch->disableDelete();
+                  $batch->add('', new ReleasePost(0));
               });
             });
 
