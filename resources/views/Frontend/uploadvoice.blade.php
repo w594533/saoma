@@ -111,7 +111,7 @@ wx.onVoiceRecordEnd({
 });
 
 //播放
-$(".button-play-voice").on('touchstart', function() {
+$(".button-play-voice").click(function() {
   //alert(JSON.stringify(voice));
   $(".button-stop-voice").addClass("hide");
   $(".button-start-voice").attr("disabled", "").find(".text").text('重新录制');
@@ -122,11 +122,12 @@ $(".button-play-voice").on('touchstart', function() {
 })
 
 //上传
-$(".button-upload-voice").on('touchstart', function() {
+$(".button-upload-voice").click(function() {
   //调用微信的上传录音接口把本地录音先上传到微信的服务器
     //不过，微信只保留3天，而我们需要长期保存，我们需要把资源从微信服务器下载到自己的服务器
     layer.open({  type: 2,content: '上传中' });
     $(".button-upload-voice").attr("disabled", "disabled").find(".text").text('上传中...');
+    // alert(voice.localId);
     wx.uploadVoice({
         localId: voice.localId, // 需要上传的音频的本地ID，由stopRecord接口获得
         // isShowProgressTips: 1, // 默认为1，显示进度提示
@@ -138,6 +139,7 @@ $(".button-upload-voice").on('touchstart', function() {
               data: {'media_id':res.serverId},
               dataType: 'json',
               success: function(res) {
+                alert(res);
                 if (res.status == 'ok') {
                   $('audio').attr("src", res);
                   layer.closeAll();
@@ -155,7 +157,9 @@ $(".button-upload-voice").on('touchstart', function() {
 
               },
         			error: function(err) {
-                alert('上传失败');
+                layer.closeAll();
+                $(".button-upload-voice").attr("disabled", "").find(".text").text('重新上传');
+                // alert('上传失败');
         				// alert(JSON.stringify(err));
         			}
             })
