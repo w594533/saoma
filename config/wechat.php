@@ -16,17 +16,17 @@ return [
     /*
      * 账号基本信息，请从微信公众平台/开放平台获取
      */
-    'app_id'  => env('WECHAT_APPID', 'wx966c1474f41ab29f'),         // AppID
-    'secret'  => env('WECHAT_SECRET', 'afbf0d73761d3fbd3d73a75aa316e907'),     // AppSecret
-    'token'   => env('WECHAT_TOKEN', 'gh_2f103f3699dc'),          // Token
-    'aes_key' => env('WECHAT_AES_KEY', ''),                    // EncodingAESKey
+    // 'app_id'  => env('WECHAT_APPID', 'wx966c1474f41ab29f'),         // AppID
+    // 'secret'  => env('WECHAT_SECRET', 'afbf0d73761d3fbd3d73a75aa316e907'),     // AppSecret
+    // 'token'   => env('WECHAT_TOKEN', 'gh_2f103f3699dc'),          // Token
+    // 'aes_key' => env('WECHAT_AES_KEY', ''),                    // EncodingAESKey
     /*
      * 账号基本信息，请从微信公众平台/开放平台获取
      */
-    // 'app_id'  => env('WECHAT_APPID', 'wx75480fcfcd93cc44'),         // AppID
-    // 'secret'  => env('WECHAT_SECRET', '04a98e68a25e8e088ceadcc11046abc2'),     // AppSecret
-    // 'token'   => env('WECHAT_TOKEN', 'gh_5de6bbf686a8'),          // Token
-    // 'aes_key' => env('WECHAT_AES_KEY', ''),                    // EncodingAESKey
+    'app_id'  => env('WECHAT_APPID', 'wx75480fcfcd93cc44'),         // AppID
+    'secret'  => env('WECHAT_SECRET', '04a98e68a25e8e088ceadcc11046abc2'),     // AppSecret
+    'token'   => env('WECHAT_TOKEN', 'gh_5de6bbf686a8'),          // Token
+    'aes_key' => env('WECHAT_AES_KEY', ''),                    // EncodingAESKey
 
     /**
      * 开放平台第三方平台配置信息

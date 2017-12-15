@@ -52,7 +52,7 @@ class BoxController extends FrontendController
       $app = new Application(config('wechat'));
       $js = $app->js;
 
-      $jssdk = '<script type="text/javascript" charset="utf-8">wx.config('.$js->config(array('uploadImage', 'chooseImage'), true).');</script>';
+      $jssdk = '<script type="text/javascript" charset="utf-8">wx.config('.$js->config(array('uploadImage', 'chooseImage'), false).');</script>';
       $box = Box::find(session('ws.box')->id);
       $images = json_decode($box->image)?json_decode($box->image):[];
       return view('Frontend.uploadimg', compact('jssdk', 'images'));
@@ -67,7 +67,7 @@ class BoxController extends FrontendController
 
       $voices = array("startRecord","stopRecord","onVoiceRecordEnd","playVoice","pauseVoice","stopVoice","onVoicePlayEnd","uploadVoice","downloadVoice");
 
-      $jssdk = '<script type="text/javascript" charset="utf-8">wx.config('.$js->config($voices, true).');</script>';
+      $jssdk = '<script type="text/javascript" charset="utf-8">wx.config('.$js->config($voices, false).');</script>';
       $box = Box::find(session('ws.box')->id);
       return view('Frontend.uploadvoice', compact('jssdk','box'));
     }
@@ -170,7 +170,7 @@ class BoxController extends FrontendController
 
         //删除转换前的文件
         @unlink($source_voice);
-        return response()->json(Storage::url($file), 200);
+        return response()->json(['status' => 'ok', 'data' => Storage::url($file)], 200);
     }
 
     public function showuploadtext()

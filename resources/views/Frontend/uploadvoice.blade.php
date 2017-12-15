@@ -138,18 +138,21 @@ $(".button-upload-voice").on('touchstart', function() {
               data: {'media_id':res.serverId},
               dataType: 'json',
               success: function(res) {
-                $('audio').attr("src", res);
-                layer.closeAll();
-                layer.open({
-                  shade: true,
-                  content: '上传成功',
-                  skin: 'msg',
-                  time: 2 //2秒后自动关闭
-                });
-                $(".button-play-voice").addClass("hide");
-                $(".button-pause-voice").addClass("hide");
-                $(".button-upload-voice").attr("disabled", "").addClass("hide").find(".text").text('上传语音');
-                location.reload();
+                if (res.status == 'ok') {
+                  $('audio').attr("src", res);
+                  layer.closeAll();
+                  layer.open({
+                    shade: true,
+                    content: '上传成功',
+                    skin: 'msg',
+                    time: 2 //2秒后自动关闭
+                  });
+                  $(".button-play-voice").addClass("hide");
+                  $(".button-pause-voice").addClass("hide");
+                  $(".button-upload-voice").attr("disabled", "").addClass("hide").find(".text").text('上传语音');
+                  location.reload();
+                }
+
               },
         			error: function(err) {
                 alert('上传失败');

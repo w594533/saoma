@@ -32,7 +32,7 @@
     </div>
 
       <div class="z_file @if (count($images) > 0) hide @endif">
-        <input id="cert1" type="file" accept="image/*" capture="camera" class="file_posi" />
+        <input id="cert1" type="file" accept="image/*" multiple class="file_posi" />
       </div>
 
   </div>
