@@ -46,7 +46,7 @@
 <script>
 $('#upload').Huploadify({
     auto:true,
-    fileTypeExts:'*.mp4;*.mov',
+    fileTypeExts:'*.mp4;*.mov;*.MOV',
     multi:true,
     formData:{_token:$('input[name="_token"]').val()},
     fileSizeLimit:30*1024,
@@ -55,7 +55,8 @@ $('#upload').Huploadify({
     removeTimeout:9999999,
     'buttonText' : '<i class="fa fa-cloud-upload"></i> 上传视频',
     uploader:'{{route("uploadvideo")}}',
-    uploadLimit: 1,
+    uploadLimit: 4,
+    multi: true,
     onUploadStart:function(file){
         layer.open({  type: 2,content: '上传中', shadeClose: false });
         console.log(file.name+'开始上传');

@@ -8,6 +8,7 @@
       <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
       <script src="/js/jquery-3.2.1.min.js"></script>
       <script src="/js/layer_mobile/layer.js"></script>
+      <script src="/js/UploadPic.js"></script>
       <link rel="stylesheet" href="/css/normalize.css">
       <link rel="stylesheet" href="/css/font-awesome.min.css">
       <link rel="stylesheet" href="/css/main.css">

@@ -14,7 +14,7 @@
 <div class="view-box">
   @if ($box->body)
     <div class="text-box item">
-      <div class="solign"><h3><span>我想写</span></h3></div>
+      {{-- <div class="solign"><h3><span>我想写</span></h3></div> --}}
       <div class="inner">
         {{$box->body}}
       </div>
@@ -23,7 +23,7 @@
 
   @if ($box->voice)
     <div class="voice-box item">
-      <div class="solign"><h3><span>我想说</span></h3></div>
+      {{-- <div class="solign"><h3><span>我想说</span></h3></div> --}}
       <div class="inner">
         <audio src="{{Storage::url($box->voice)}}" preload="auto" controls></audio>
       </div>
@@ -32,7 +32,7 @@
 
   @if ($box->img_path)
     <div class="image-box item">
-      <div class="solign"><h3><span>图片</span></h3></div>
+      {{-- <div class="solign"><h3><span>图片</span></h3></div> --}}
       <div class="inner">
         <div class="swiper-container">
           <div class="swiper-wrapper">
@@ -50,7 +50,7 @@
 
   @if ($box->video)
     <div class="video-box item">
-      <div class="solign"><h3><span>视频</span></h3></div>
+      {{-- <div class="solign"><h3><span>视频</span></h3></div> --}}
       <div class="inner">
         <video controls>
           <source src="{{ Storage::url($box->video) }}" type="video/mp4">

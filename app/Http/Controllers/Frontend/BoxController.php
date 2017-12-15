@@ -75,6 +75,7 @@ class BoxController extends FrontendController
     //上传图片
     public function uploadimg(Request $request)
     {
+      return  $request->file('file');die;
       $this->_check_box();
 
       $user = session('ws.user');
