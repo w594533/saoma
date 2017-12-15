@@ -1,7 +1,7 @@
 @extends('Frontend.layouts.default')
 @section('css')
   <style>
-    .slogin a {color: #fff; text-decoration: none;}
+    .slogin a {color: #615d5d; text-decoration: none;}
     .slogin a span {font-size: 12px;}
   </style>
 @endsection

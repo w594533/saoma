@@ -17,6 +17,7 @@ class CreateBoxesTable extends Migration
             $table->increments('id');
             $table->string('voice')->nullable()->comment('语音');
             $table->json('image')->nullable()->comment('图片');
+            $table->json('image_osskey')->nullable()->comment('图片OSSKEY');
             $table->text('body')->nullable()->comment('文字');
             $table->string('video')->nullable()->comment('视频');
             $table->string('video_osskey')->nullable()->comment('视频OSSKEY');

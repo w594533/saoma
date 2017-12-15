@@ -6,7 +6,7 @@ return [
      *
      * 当值为 false 时，所有的日志都不会记录
      */
-    'debug'  => true,
+    'debug'  => false,
 
     /*
      * 使用 Laravel 的缓存系统
@@ -105,7 +105,7 @@ return [
      *
      * 当 enable_mock 为 true 则会启用模拟微信授权，用于开发时使用，开发完成请删除或者改为 false 即可
      */
-    'enable_mock' => env('WECHAT_ENABLE_MOCK', true),
+    'enable_mock' => env('WECHAT_ENABLE_MOCK', false),
     'mock_user' => [
         'openid' => 'odh7zsgI75iT8FRh0fGlSojc9PWM',
         // 以下字段为 scope 为 snsapi_userinfo 时需要

@@ -7,13 +7,13 @@
   <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/avenir-medium.woff2">
   <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/avenir-bold.woff2">
   <style>
-    .content {width: auto; padding: 20px 10px;}
+    .content {width: auto; padding: 20px 0px;}
     .note {text-align: left; color: red; margin: 10px 0; font-size: 12px;}
     .note .red {display: block; padding:5px;}
     .content .uploadify-button {width: 120px; margin: 12px auto; display: block; text-align: center; font-weight: normal;}
     .uploadify-progress {display: block; width: 100%;}
 
-    .up_filename, .progressnum, .delfilebtn, .uploadbtn, .up_percent {display: inline-block;font-size: 14px; margin-left: 0; margin-right: 20px; margin-top: 10px; color: #fff;}
+    .up_filename, .progressnum, .delfilebtn, .uploadbtn, .up_percent {display: inline-block;font-size: 14px; margin-left: 0; margin-right: 20px; margin-top: 10px; color: #615d5d;}
     .up_filename {display: block; margin-top: 10px;}
     .uploadbtn, .delfilebtn {display: none;}
     .upload-btn button {display: block; min-width: 120px; margin: 10px auto;}
@@ -47,16 +47,16 @@
 $('#upload').Huploadify({
     auto:true,
     fileTypeExts:'*.mp4;*.mov;*.MOV',
-    multi:true,
+    multi:false,
     formData:{_token:$('input[name="_token"]').val()},
     fileSizeLimit:30*1024,
     showUploadedPercent:true,
     showUploadedSize:true,
-    removeTimeout:9999999,
+    removeTimeout:10,
+    removeCompleted: true,
     'buttonText' : '<i class="fa fa-cloud-upload"></i> 上传视频',
     uploader:'{{route("uploadvideo")}}',
-    uploadLimit: 4,
-    multi: true,
+    uploadLimit: 1,
     onUploadStart:function(file){
         layer.open({  type: 2,content: '上传中', shadeClose: false });
         console.log(file.name+'开始上传');

@@ -4,7 +4,7 @@
     <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/avenir-medium.woff2">
     <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/avenir-bold.woff2">
   <style>
-  .note {text-align: center; color: red; margin: 10px 0; font-size: 12px;}
+  .note {text-align: left; color: red; margin: 10px 0; font-size: 12px;}
   .upload-btn button {display: block; min-width: 120px; margin: 10px auto;}
   .upload-btn .hide {display: none;}
   .audio-box{width:300px; margin:0px auto 10px auto}

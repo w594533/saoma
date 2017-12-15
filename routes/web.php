@@ -24,6 +24,7 @@ Route::group(['middleware' => ['web', 'wechat.oauth', 'ws.oauth']], function () 
     Route::get('/showuploadtext', 'Frontend\BoxController@showuploadtext')->name('showuploadtext');
     Route::get('/showuploadvideo', 'Frontend\BoxController@showuploadvideo')->name('showuploadvideo');
     Route::post('/uploadimg', 'Frontend\BoxController@uploadimg')->name('uploadimg');
+    Route::post('/deleteuploadimg', 'Frontend\BoxController@deleteuploadimg')->name('deleteuploadimg');
     Route::get('/uploadvoice', 'Frontend\BoxController@uploadvoice')->name('uploadvoice');
     Route::post('/uploadtext', 'Frontend\BoxController@uploadtext')->name('uploadtext');
     Route::post('/uploadvideo', 'Frontend\BoxController@uploadvideo')->name('uploadvideo');

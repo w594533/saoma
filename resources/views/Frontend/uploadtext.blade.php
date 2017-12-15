@@ -3,7 +3,7 @@
   <style>
     .content {
       width: auto;
-      padding: 20px;
+      padding: 20px 0;
     }
     #body {padding: 10px 0; border: 1px solid #ddd; resize: none; border-radius: 4px; min-height: 200px; width: 100%;}
   </style>

@@ -72,28 +72,11 @@ class BoxController extends FrontendController
       return view('Frontend.uploadvoice', compact('jssdk','box'));
     }
 
-    //上传图片
-    public function uploadimg(Request $request)
+    public function deleteuploadimg(Request $request)
     {
-      return  $request->file('file');die;
       $this->_check_box();
-
       $user = session('ws.user');
-      $app = new Application(config('wechat'));
-      // 临时素材
-      $temporary = $app->material_temporary;
-      $media_ids = $request->media_ids;
-      $media_ids = explode(",", $media_ids);
-      $files = [];
-	    @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
-      foreach ($media_ids as $key => $media_id) {
-        $filename = md5(md5(time().rand(1,9999)));
-        $result_file = $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename);
-        $files[] = 'upload/'.$user->id.'/'.$result_file;
-      }
-
       $box = Box::find(session('ws.box')->id);
-      //删除之前的文件
       if ($box->image) {
         foreach (json_decode($box->image) as $image) {
           if ($image && file_exists(storage_path('app/public').'/'.$image)) {
@@ -101,10 +84,58 @@ class BoxController extends FrontendController
           }
         }
       }
-      $box->image = json_encode($files);
+
+      $box->image = null;
       $box->save();
 
-      return response()->json($files, 200);
+      return response()->json(['status' => 'ok'], 200);
+    }
+
+    //上传图片
+    public function uploadimg(Request $request)
+    {
+        $this->_check_box();
+        $user = session('ws.user');
+        $box = Box::find(session('ws.box')->id);
+
+        $image_ossurl = array();
+        //上传新图
+        if ($request->imgs) {
+            //上传图片
+            $i = 1;
+            @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
+            foreach ($request->imgs as $key => $post_image) {
+              //最多上传3张
+              if ($i > 4) {
+                  break;
+              }
+
+              if ($post_image && preg_match('/^(data:\s*image\/(\w+);base64,)/', $post_image, $result)) {
+                  $avatar_images_decode = str_replace($result[1], '', $post_image);
+                  $ext = isset($result[2]) && $result[2] ? $result[2] : "jpg";
+                  $md5name = md5(time() . rand(1, 9999) . $box->id . $key);
+                  $newname = $md5name . "." . $ext;
+                  $new_file = storage_path('app/public').'/upload/'.$user->id.'/'.$newname;
+
+                  if (file_put_contents($new_file, base64_decode($avatar_images_decode))) {
+                      $image_ossurl[] = 'upload/'.$user->id.'/'.$newname;
+                      $i++;
+                  }
+              }
+            }
+
+            if ($box->image) {
+              foreach (json_decode($box->image) as $image) {
+                if ($image && file_exists(storage_path('app/public').'/'.$image)) {
+                  @unlink(storage_path('app/public').'/'.$image);
+                }
+              }
+            }
+
+            $box->image = json_encode($image_ossurl);
+            $box->save();
+        }
+        return response()->json(['status'=>'ok', 'data' => $image_ossurl], 200);
     }
 
     //上传语音
@@ -178,10 +209,8 @@ class BoxController extends FrontendController
 
       if ($request->hasFile('file') && $request->file('file')->isValid()) {
         $box = Box::find(session('ws.box')->id);
-        //删除之前的视频文件
-        if ($box->video && file_exists(storage_path('app/public').'/'.$box->video)) {
-          @unlink(storage_path('app/public').'/'.$box->video);
-        }
+
+
         $user = session('ws.user');
 
         $photo = $request->file('file');
@@ -205,6 +234,13 @@ class BoxController extends FrontendController
             // 'ContentType' => 'video/mpeg4',
         ]);
 
+        //删除之前视频
+        if ($box->video_osskey) {
+          OSS::publicDeleteObject($this->bucketName, $box->video_osskey);
+        }
+        // if ($box->video && file_exists(storage_path('app/public').'/'.$box->video)) {
+        //   @unlink(storage_path('app/public').'/'.$box->video);
+        // }
         $box->video = OSS::getPublicObjectURL($this->bucketName, 'videos/'.$filename.'.'.$extension);
         $box->video_osskey = 'videos/'.$filename.'.'.$extension;
         $box->save();
