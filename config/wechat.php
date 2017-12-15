@@ -6,7 +6,7 @@ return [
      *
      * 当值为 false 时，所有的日志都不会记录
      */
-    'debug'  => true,
+    'debug'  => false,
 
     /*
      * 使用 Laravel 的缓存系统
@@ -16,17 +16,17 @@ return [
     /*
      * 账号基本信息，请从微信公众平台/开放平台获取
      */
-    'app_id'  => env('WECHAT_APPID', 'wx966c1474f41ab29f'),         // AppID
-    'secret'  => env('WECHAT_SECRET', 'afbf0d73761d3fbd3d73a75aa316e907'),     // AppSecret
-    'token'   => env('WECHAT_TOKEN', 'gh_2f103f3699dc'),          // Token
-    'aes_key' => env('WECHAT_AES_KEY', ''),                    // EncodingAESKey
+    // 'app_id'  => env('WECHAT_APPID', 'wx966c1474f41ab29f'),         // AppID
+    // 'secret'  => env('WECHAT_SECRET', 'afbf0d73761d3fbd3d73a75aa316e907'),     // AppSecret
+    // 'token'   => env('WECHAT_TOKEN', 'gh_2f103f3699dc'),          // Token
+    // 'aes_key' => env('WECHAT_AES_KEY', ''),                    // EncodingAESKey
     /*
      * 账号基本信息，请从微信公众平台/开放平台获取
      */
-    // 'app_id'  => env('WECHAT_APPID', 'wx75480fcfcd93cc44'),         // AppID
-    // 'secret'  => env('WECHAT_SECRET', '04a98e68a25e8e088ceadcc11046abc2'),     // AppSecret
-    // 'token'   => env('WECHAT_TOKEN', 'gh_5de6bbf686a8'),          // Token
-    // 'aes_key' => env('WECHAT_AES_KEY', ''),                    // EncodingAESKey
+    'app_id'  => env('WECHAT_APPID', 'wx75480fcfcd93cc44'),         // AppID
+    'secret'  => env('WECHAT_SECRET', '04a98e68a25e8e088ceadcc11046abc2'),     // AppSecret
+    'token'   => env('WECHAT_TOKEN', 'gh_5de6bbf686a8'),          // Token
+    'aes_key' => env('WECHAT_AES_KEY', ''),                    // EncodingAESKey
 
     /**
      * 开放平台第三方平台配置信息
@@ -105,7 +105,7 @@ return [
      *
      * 当 enable_mock 为 true 则会启用模拟微信授权，用于开发时使用，开发完成请删除或者改为 false 即可
      */
-    'enable_mock' => env('WECHAT_ENABLE_MOCK', true),
+    'enable_mock' => env('WECHAT_ENABLE_MOCK', false),
     'mock_user' => [
         'openid' => 'odh7zsgI75iT8FRh0fGlSojc9PWM',
         // 以下字段为 scope 为 snsapi_userinfo 时需要
