@@ -201,7 +201,7 @@ class BoxController extends FrontendController
         // 在外网上传一个文件并指定 options 如：Content-Type 类型
         // 更多 options 见：https://github.com/johnlui/AliyunOSS/blob/master/src/oss/src/Aliyun/OSS/OSSClient.php#L142-L148
         $res = OSS::publicUpload($this->bucketName, 'videos/'.$filename.'.'.$extension, $photo, [
-            'ContentType' => 'video/mpeg4',
+            // 'ContentType' => 'video/mpeg4',
         ]);
 
         $box->video = OSS::getPublicObjectURL($this->bucketName, 'videos/'.$filename.'.'.$extension);

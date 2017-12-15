@@ -65,7 +65,7 @@ $(function() {
 });
 
 function upload(){
-  alert(images.localIds);
+  // alert(images.localIds);
   var serverIds = [];
   wx.uploadImage({
     localId: images.localIds[i],
@@ -92,7 +92,7 @@ function upload(){
               layer.closeAll();
               $(".button-select-img").attr("disabled", "");
               $(".button-upload-img").addClass("hide").find('.text').text('开始上传');
-              alert(res);
+              // alert(res);
               layer.open({
                 shade: true,
                 content: '上传成功',
@@ -101,7 +101,8 @@ function upload(){
               });
             },
       			error: function(err) {
-      				alert(JSON.stringify(err));
+              alert('上传失败');
+      				// alert(JSON.stringify(err));
       			}
           })
         }

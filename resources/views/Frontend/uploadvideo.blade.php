@@ -33,7 +33,7 @@
   <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> 返回</button>
 </div>
 <div class="note">
-    <span class="red">*允许格式：.mp4</span>
+    <span class="red">*允许格式：.mp4,.mov</span>
     <span class="red">*允许最大上传：30M</span>
 </div>
     <script src="/js/plyr/plyr.js"></script>
@@ -46,7 +46,7 @@
 <script>
 $('#upload').Huploadify({
     auto:true,
-    fileTypeExts:'*.mp4',
+    fileTypeExts:'*.mp4;*.mov',
     multi:true,
     formData:{_token:$('input[name="_token"]').val()},
     fileSizeLimit:30*1024,

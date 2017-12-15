@@ -74,7 +74,7 @@ $('.button-stop-voice').on('touchstart', function(event){
     END = new Date().getTime();
 
     if((END - START) < 300){
-      alert('456');
+      // alert('456');
         END = 0;
         START = 0;
         //小于300ms，不录音
@@ -91,7 +91,8 @@ $('.button-stop-voice').on('touchstart', function(event){
             // uploadVoice();
           },
           fail: function (res) {
-            alert(JSON.stringify(res));
+            alert('录制失败');
+            // alert(JSON.stringify(res));
           }
         });
     }
@@ -148,11 +149,11 @@ $(".button-upload-voice").on('touchstart', function() {
                 $(".button-play-voice").addClass("hide");
                 $(".button-pause-voice").addClass("hide");
                 $(".button-upload-voice").attr("disabled", "").addClass("hide").find(".text").text('上传语音');
-                alert(res);
+                location.reload();
               },
         			error: function(err) {
                 alert('上传失败');
-        				alert(JSON.stringify(err));
+        				// alert(JSON.stringify(err));
         			}
             })
         }

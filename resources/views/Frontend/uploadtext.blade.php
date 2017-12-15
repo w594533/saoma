@@ -34,7 +34,7 @@ $(".save").on('touchstart', function() {
           ,skin: 'msg'
           ,time: 2 //2秒后自动关闭
         });
-        alert(statusCode);
+        // alert(statusCode);
       },
       error: function(err) {
         alert('保存失败');
