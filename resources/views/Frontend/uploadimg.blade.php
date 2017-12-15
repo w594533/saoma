@@ -8,9 +8,9 @@
   .z_file input::-webkit-file-upload-button {width: 1rem;height: 1rem;border: none;position: absolute;outline: 0;opacity: 0;}
   .z_file input#cert1 {display: block;width: auto;border: 0;vertical-align: middle; width: 100%; height: 100%; opacity: 0;}
 
-  .upload-img-box {display: flex; justify-content: flex-start;}
+  .upload-img-box {display: flex; justify-content: flex-start; flex-wrap: wrap;}
 
-  .img-box {justify-content: flex-start; padding: 0;}
+  .img-box {justify-content: flex-start; padding: 0; width: 100%;}
   .img-box .item {display: block; margin-right: 20px; position: relative;}
   .img-box .item .delete{position: absolute;width: 18px;height: 18px;background: url('/img/delete.png') no-repeat left top;background-size: cover;-webkit-background-size: cover;-moz-background-size: cover;display: block;right: -9px;top: -9px;}
   .z_file.hide {display: none !important;}
