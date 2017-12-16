@@ -139,7 +139,7 @@ $(".button-upload-voice").click(function() {
               data: {'media_id':res.serverId},
               dataType: 'json',
               success: function(res) {
-                alert(res);
+                //alert(res);
                 if (res.status == 'ok') {
                   $('audio').attr("src", res);
                   layer.closeAll();

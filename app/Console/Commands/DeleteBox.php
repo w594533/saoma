@@ -43,7 +43,7 @@ class DeleteBox extends Command
       $prev_first_date = date('Y-m-d', strtotime(date('Y-m-01') . ' -1 month')).' 00:00:00';
       $prev_last_date = date('Y-m-d', strtotime(date('Y-m-01') . ' -1 day')).' 23:59:59';
       // $boxes = Box::where('status', 2)->get();
-      $boxes = Box::where('status', 2)->whereBetween('created_at', [$prev_first_date, $prev_last_date])->get();
+      $boxes = Box::whereBetween('created_at', [$prev_first_date, $prev_last_date])->get();
       foreach ($boxes as $key => $box) {
         //删除图片
         if ($box->image) {
