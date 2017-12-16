@@ -8,6 +8,7 @@ use EasyWeChat\Foundation\Application;
 use App\Models\Box;
 use Illuminate\Support\Facades\Storage;
 use App\Services\OSS;
+use App\Tools\Imgcompress;
 
 
 class BoxController extends FrontendController
@@ -99,6 +100,7 @@ class BoxController extends FrontendController
         $box = Box::find(session('ws.box')->id);
 
         $image_ossurl = array();
+        $imgcompress_files = array();
         //上传新图
         if ($request->imgs) {
             //上传图片
@@ -120,6 +122,16 @@ class BoxController extends FrontendController
                   if (file_put_contents($new_file, base64_decode($avatar_images_decode))) {
                       $image_ossurl[] = 'upload/'.$user->id.'/'.$newname;
                       $i++;
+
+                      //图片压缩
+                      $imgcompress = new Imgcompress($new_file, 0.5);
+
+                      $imgcompress_name = md5(time() . rand(1, 9999) . $key) . "." . $ext;
+                      $imgcompress_file = storage_path('app/public').'/upload/'.$user->id.'/'.$imgcompress_name;
+                      $imgcompress->compressImg($imgcompress_file);
+                      $imgcompress_files[] = 'upload/'.$user->id.'/'.$imgcompress_name;
+
+                      @unlink($new_file);
                   }
               }
             }
@@ -132,7 +144,7 @@ class BoxController extends FrontendController
               }
             }
 
-            $box->image = json_encode($image_ossurl);
+            $box->image = json_encode($imgcompress_files);
             $box->save();
         }
         return response()->json(['status'=>'ok', 'data' => $image_ossurl], 200);
