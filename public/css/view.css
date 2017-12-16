@@ -1,4 +1,4 @@
-.item {margin-bottom: 20px;}
+.item {margin-bottom: 20px; padding: 5px 0;}
 .solign {text-align: left; margin-bottom: 10px; border-bottom:1px solid #FBC815;}
 .solign img {width: 60px; display: block;}
 .solign h3 {text-align: center; color: #000; margin: 0;}
