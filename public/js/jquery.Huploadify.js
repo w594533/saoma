@@ -26,7 +26,7 @@
 			onSelect:null,//选择文件后的回调函数，可传入参数file
 			onQueueComplete:null//队列中的所有文件上传完成后触发
 		}
-			
+
 		var option = $.extend(defaults,opts);
 
 		//定义一个通用函数集合
@@ -52,7 +52,7 @@
 			},
 			////根据文件序号获取文件
 			getFile : function(index,files){
-				for(var i=0;i<files.length;i++){	   
+				for(var i=0;i<files.length;i++){
 					if(files[i].index == index){
 						return files[i];
 					}
@@ -92,7 +92,7 @@
 							}
 							else{
 								var file = F.getFile(fileIndex,uploadManager.filteredFiles);
-								file && uploadManager._uploadFile(file);	
+								file && uploadManager._uploadFile(file);
 							}
 						},
 						cancel : function(fileIndex){
@@ -149,16 +149,16 @@
 					//文件选择控件选择
 					var fileInput = this._getInputBtn();
 				  	if (fileInput.length>0) {
-						fileInput.change(function(e) { 
-							uploadManager._getFiles(e); 
-					 	});	
+						fileInput.change(function(e) {
+							uploadManager._getFiles(e);
+					 	});
 				 	}
-				  
+
 					//点击选择文件按钮时触发file的click事件
 					_this.find('.uploadify-button').on('click',function(){
 						_this.find('.selectbtn').trigger('click');
 					});
-				  
+
 					option.onInit && option.onInit(returnObj);
 				},
 				_filter: function(files) {		//选择文件组的过滤方法
@@ -203,8 +203,8 @@
 						var num = '<span class="progressnum"><span class="uploadedsize">0KB</span>/<span class="totalsize">${fileSize}</span></span>'.replace(/\${fileSize}/g,F.formatFileSize(file.size));
 						$html.find('.uploadify-progress').after(num);
 					}
-					
-					//判断是否显示上传百分比	
+
+					//判断是否显示上传百分比
 					if(option.showUploadedPercent){
 						var percentText = '<span class="up_percent">0%</span>';
 						$html.find('.uploadify-progress').after(percentText);
@@ -255,7 +255,7 @@
 						if (f.index == file.index) {
 							uploadManager.filteredFiles.splice(i,1);
 							_this.find('#fileupload_'+instanceNumber+'_'+file.index).fadeOut();
-							option.onCancel && option.onCancel(file);	
+							option.onCancel && option.onCancel(file);
 							break;
 						}
 			  		}
@@ -265,7 +265,7 @@
 					var thisfile = _this.find('#fileupload_'+instanceNumber+'_'+file.index);
 					thisfile.find('.uploadify-progress-bar').css('width','100%');
 					option.showUploadedSize && thisfile.find('.uploadedsize').text(thisfile.find('.totalsize').text());
-					option.showUploadedPercent && thisfile.find('.up_percent').text('100%');	
+					option.showUploadedPercent && thisfile.find('.up_percent').text('100%');
 				},
 				onProgress : function(file, loaded, total) {
 					var eleProgress = _this.find('#fileupload_'+instanceNumber+'_'+file.index+' .uploadify-progress');
@@ -275,7 +275,7 @@
 						eleProgress.nextAll('.progressnum .totalsize').text(F.formatFileSize(total));
 					}
 					if(option.showUploadedPercent){
-						eleProgress.nextAll('.up_percent').text(percent);	
+						eleProgress.nextAll('.up_percent').text(percent);
 					}
 					eleProgress.children('.uploadify-progress-bar').css('width',percent);
 			  	},
@@ -304,7 +304,7 @@
 					var xhr = null;
 					try{
 						xhr=new XMLHttpRequest();
-					}catch(e){	  
+					}catch(e){
 						xhr=ActiveXobject("Msxml12.XMLHTTP");
 				  	}
 				  	if(xhr.upload){
@@ -326,14 +326,14 @@
 								}
 								else {
 									file.status = 3;//标记为上传失败
-									option.onUploadError && option.onUploadError(file, xhr.responseText);		
+									option.onUploadError && option.onUploadError(file, xhr.responseText);
 								}
 								option.onUploadComplete && option.onUploadComplete(file,xhr.responseText);
-								
+
 								//检测队列中的文件是否全部上传完成，执行onQueueComplete
 								if(option.onQueueComplete){
 									var queueData = uploadManager._allFilesUploaded();
-									queueData && option.onQueueComplete(queueData);	
+									queueData && option.onQueueComplete(queueData);
 								}
 
 								//清除文件选择框中的已有值
@@ -356,14 +356,14 @@
 							}
 							xhr.send(fd);
 						}
-						
+
 				  	}
 				}
 			};
 
 			uploadManager.init();
 		});
-		
+
 		return returnObj;
 
 	}

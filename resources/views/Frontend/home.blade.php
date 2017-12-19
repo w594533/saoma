@@ -9,67 +9,70 @@
 <div class="box">
   <div class="item">
     <div class="box-item fl">
+      <a href="{{route('showuploadimg')}}">
       <div class="box-item-logo">
         <img src="/img/1.png"/>
       </div>
       <div class="button">
         <div class="slogin">
-          <a href="{{route('showuploadimg')}}">
           上传图片
           @if ($box->image)
             <span>(已上传)</span>
           @endif
-          </a>
+
+        </div>
       </div>
-      </div>
+      </a>
     </div>
     <div class="box-item fr">
+      <a href="{{route('showuploadvideo')}}">
       <div class="box-item-logo">
         <img src="/img/2.png"/>
       </div>
       <div class="button">
         <div class="slogin">
-          <a href="{{route('showuploadvideo')}}">
             上传视频
             @if ($box->video)
               <span>(已上传)</span>
             @endif
-          </a>
         </div>
       </div>
+      </a>
     </div>
     <div class="clear"></div>
   </div>
   <div class="item">
     <div class="box-item fl">
+      <a href="{{route('showuploadvoice')}}">
       <div class="box-item-logo">
         <img src="/img/3.png"/>
       </div>
       <div class="button">
         <div class="slogin">
-          <a href="{{route('showuploadvoice')}}">
             录制语音
             @if ($box->voice)
               <span>(已上传)</span>
             @endif
-          </a>
         </div>
       </div>
+      </a>
     </div>
     <div class="box-item fr">
+      <a href="{{route('showuploadtext')}}">
       <div class="box-item-logo">
         <img src="/img/4.png"/>
       </div>
       <div class="button">
         <div class="slogin">
-          <a href="{{route('showuploadtext')}}">
+
             输入文字
             @if ($box->body)
               <span>(已输入)</span>
             @endif
-          </a>
+
         </div>
       </div>
+      </a>
     </div>
     <div class="clear"></div>
   </div>
