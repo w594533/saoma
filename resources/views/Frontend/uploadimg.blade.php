@@ -113,7 +113,7 @@ function upload(){
                   shade: true,
                   content: '上传成功',
                   skin: 'msg',
-                  time: 2 //2秒后自动关闭
+                  time: 3 //2秒后自动关闭
                 });
                 location.reload();
               }
