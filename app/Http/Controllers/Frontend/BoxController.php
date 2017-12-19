@@ -105,7 +105,8 @@ class BoxController extends FrontendController
       $media_ids = explode(",", $media_ids);
       $files = [];
       $imgcompress_files = [];
-	    @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
+      Storage::makeDirectory('public/upload/'.$user->id);
+	    // @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
       foreach ($media_ids as $key => $media_id) {
         $filename = md5(md5(time().rand(1,9999)));
         $result_file = $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename);

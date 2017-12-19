@@ -74,7 +74,7 @@ $(function() {
 
   //上传图片
   $(".button-upload-img").on('touchstart', function() {
-    layer.open({  type: 2,content: '上传中' });
+    // layer.open({  type: 2,content: '上传中' });
     upload();
   })
 });
@@ -84,7 +84,7 @@ function upload(){
   var serverIds = [];
   wx.uploadImage({
     localId: images.localIds[i],
-    isShowProgressTips: 0,
+    isShowProgressTips: 1,
     success: function(res) {
       i++;
       //alert('已上传：' + i + '/' + length);
