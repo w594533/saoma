@@ -29,7 +29,7 @@ body {
 .fr {float: right;}
 .clear {clear: both;}
 .box-item {width: 40%; text-align: center; margin: 20px 10px;}
-.box-item a..box-item a.active,.box-item a:hover {color: #413f40; text-decoration: none;}
+.box-item a,.box-item a.active,.box-item a:hover {color: #413f40; text-decoration: none;}
 .box-item img {width: 50%;}
 .box-item .button {
   margin-top: 5px;
