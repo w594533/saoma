@@ -12,6 +12,7 @@
   @endforeach
 </div>
 <div class="upload-btn">
+  {{ csrf_field() }}
   <button class="button-select-img btn btn-default btn-sm"><i class="fa fa-save"></i> <span class="text">选择图片</span></button>
   <button class="button-upload-img btn btn-default btn-sm"><i class="fa fa-cloud-upload"></i> <span class="text">开始上传</span></button>
   <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> <span class="text">返回</span></button>
@@ -43,7 +44,7 @@ $(function() {
         //alert('已选择 ' + res.localIds.length + ' 张图片');
         images.localIds = res.localIds;
         var imghtml = '';
-        alert(window.wxjs_is_wkwebview);
+        //alert(window.wxjs_is_wkwebview);
         if (window.wxjs_is_wkwebview) {
           //此接口仅在 iOS WKWebview 下提供
           for(var j=0; j<res.localIds.length; j++) {
@@ -83,7 +84,7 @@ function upload(){
   var serverIds = [];
   wx.uploadImage({
     localId: images.localIds[i],
-    // isShowProgressTips: 1,
+    isShowProgressTips: 0,
     success: function(res) {
       i++;
       //alert('已上传：' + i + '/' + length);
@@ -98,21 +99,25 @@ function upload(){
         if (images.serverId) {
           //将图片下载到服务器
           $.ajax({
-            type:'get',
+            type:'post',
             url: "{{route('uploadimg')}}",
-            data: {'media_ids':images.serverId.join(",")},
+            data: {'media_ids':images.serverId.join(","), _token:$('input[name="_token"]').val()},
             dataType: 'json',
             success: function(res) {
-              layer.closeAll();
-              $(".button-select-img").attr("disabled", "");
-              $(".button-upload-img").addClass("hide").find('.text').text('开始上传');
-              alert(res);
-              layer.open({
-                shade: true,
-                content: '上传成功',
-                skin: 'msg',
-                time: 2 //2秒后自动关闭
-              });
+              if (res.status == 'ok') {
+                layer.closeAll();
+                $(".button-select-img").attr("disabled", "");
+                $(".button-upload-img").addClass("hide").find('.text').text('开始上传');
+                //alert(res);
+                layer.open({
+                  shade: true,
+                  content: '上传成功',
+                  skin: 'msg',
+                  time: 2 //2秒后自动关闭
+                });
+                location.reload();
+              }
+
             },
       			error: function(err) {
       				alert(JSON.stringify(err));
