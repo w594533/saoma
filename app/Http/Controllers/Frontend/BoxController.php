@@ -95,59 +95,104 @@ class BoxController extends FrontendController
     //上传图片
     public function uploadimg(Request $request)
     {
-        $this->_check_box();
-        $user = session('ws.user');
-        $box = Box::find(session('ws.box')->id);
+      $this->_check_box();
 
-        $image_ossurl = array();
-        $imgcompress_files = array();
-        //上传新图
-        if ($request->imgs) {
-            //上传图片
-            $i = 1;
-            @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
-            foreach ($request->imgs as $key => $post_image) {
-              //最多上传3张
-              if ($i > 4) {
-                  break;
-              }
+      $user = session('ws.user');
+      $app = new Application(config('wechat'));
+      // 临时素材
+      $temporary = $app->material_temporary;
+      $media_ids = $request->media_ids;
+      $media_ids = explode(",", $media_ids);
+      $files = [];
+      $imgcompress_files = [];
+	    @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
+      foreach ($media_ids as $key => $media_id) {
+        $filename = md5(md5(time().rand(1,9999)));
+        $result_file = $temporary->download($media_id, storage_path('app/public').'/upload/'.$user->id.'/', $filename);
 
-              if ($post_image && preg_match('/^(data:\s*image\/(\w+);base64,)/', $post_image, $result)) {
-                  $avatar_images_decode = str_replace($result[1], '', $post_image);
-                  $ext = isset($result[2]) && $result[2] ? $result[2] : "jpg";
-                  $md5name = md5(time() . rand(1, 9999) . $box->id . $key);
-                  $newname = $md5name . "." . $ext;
-                  $new_file = storage_path('app/public').'/upload/'.$user->id.'/'.$newname;
+        $new_file = storage_path('app/public').'/upload/'.$user->id.'/'.$result_file;
+        if (file_exists($new_file)) {
+          $pathinfo = pathinfo($new_file);
+          $ext = $pathinfo['extension'];
+          //图片压缩
+          $imgcompress = new Imgcompress($new_file, 0.5);
 
-                  if (file_put_contents($new_file, base64_decode($avatar_images_decode))) {
-                      $image_ossurl[] = 'upload/'.$user->id.'/'.$newname;
-                      $i++;
+          $imgcompress_name = md5(time() . rand(1, 9999) . $key) . "." . $ext;
+          $imgcompress_file = storage_path('app/public').'/upload/'.$user->id.'/'.$imgcompress_name;
+          $imgcompress->compressImg($imgcompress_file);
+          $imgcompress_files[] = 'upload/'.$user->id.'/'.$imgcompress_name;
 
-                      //图片压缩
-                      $imgcompress = new Imgcompress($new_file, 0.5);
-
-                      $imgcompress_name = md5(time() . rand(1, 9999) . $key) . "." . $ext;
-                      $imgcompress_file = storage_path('app/public').'/upload/'.$user->id.'/'.$imgcompress_name;
-                      $imgcompress->compressImg($imgcompress_file);
-                      $imgcompress_files[] = 'upload/'.$user->id.'/'.$imgcompress_name;
-
-                      @unlink($new_file);
-                  }
-              }
-            }
-
-            if ($box->image) {
-              foreach (json_decode($box->image) as $image) {
-                if ($image && file_exists(storage_path('app/public').'/'.$image)) {
-                  @unlink(storage_path('app/public').'/'.$image);
-                }
-              }
-            }
-
-            $box->image = json_encode($imgcompress_files);
-            $box->save();
+          @unlink($new_file);
         }
-        return response()->json(['status'=>'ok', 'data' => $image_ossurl], 200);
+      }
+
+      $box = Box::find(session('ws.box')->id);
+      //删除之前的文件
+      if ($box->image) {
+        foreach (json_decode($box->image) as $image) {
+          if ($image && file_exists(storage_path('app/public').'/'.$image)) {
+            @unlink(storage_path('app/public').'/'.$image);
+          }
+        }
+      }
+      $box->image = json_encode($imgcompress_files);
+      $box->save();
+
+      return response()->json(['status'=>'ok', 'data' => $imgcompress_files], 200);
+
+        // $this->_check_box();
+        // $user = session('ws.user');
+        // $box = Box::find(session('ws.box')->id);
+        //
+        // $image_ossurl = array();
+        // $imgcompress_files = array();
+        // //上传新图
+        // if ($request->imgs) {
+        //     //上传图片
+        //     $i = 1;
+        //     @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
+        //     foreach ($request->imgs as $key => $post_image) {
+        //       //最多上传3张
+        //       if ($i > 4) {
+        //           break;
+        //       }
+        //
+        //       if ($post_image && preg_match('/^(data:\s*image\/(\w+);base64,)/', $post_image, $result)) {
+        //           $avatar_images_decode = str_replace($result[1], '', $post_image);
+        //           $ext = isset($result[2]) && $result[2] ? $result[2] : "jpg";
+        //           $md5name = md5(time() . rand(1, 9999) . $box->id . $key);
+        //           $newname = $md5name . "." . $ext;
+        //           $new_file = storage_path('app/public').'/upload/'.$user->id.'/'.$newname;
+        //
+        //           if (file_put_contents($new_file, base64_decode($avatar_images_decode))) {
+        //               $image_ossurl[] = 'upload/'.$user->id.'/'.$newname;
+        //               $i++;
+        //
+        //               //图片压缩
+        //               $imgcompress = new Imgcompress($new_file, 0.5);
+        //
+        //               $imgcompress_name = md5(time() . rand(1, 9999) . $key) . "." . $ext;
+        //               $imgcompress_file = storage_path('app/public').'/upload/'.$user->id.'/'.$imgcompress_name;
+        //               $imgcompress->compressImg($imgcompress_file);
+        //               $imgcompress_files[] = 'upload/'.$user->id.'/'.$imgcompress_name;
+        //
+        //               @unlink($new_file);
+        //           }
+        //       }
+        //     }
+        //
+        //     if ($box->image) {
+        //       foreach (json_decode($box->image) as $image) {
+        //         if ($image && file_exists(storage_path('app/public').'/'.$image)) {
+        //           @unlink(storage_path('app/public').'/'.$image);
+        //         }
+        //       }
+        //     }
+        //
+        //     $box->image = json_encode($imgcompress_files);
+        //     $box->save();
+        // }
+        // return response()->json(['status'=>'ok', 'data' => $image_ossurl], 200);
     }
 
     //上传语音
