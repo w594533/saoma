@@ -157,8 +157,15 @@ $(".button-upload-voice").click(function() {
 
               },
         			error: function(err) {
-                layer.closeAll();
-                $(".button-upload-voice").attr("disabled", "").find(".text").text('重新上传');
+                layer.open({
+      content: '由于文件较大，上传超时，请在网络良好的情况下上传'
+      ,btn: ['确定']
+      ,yes: function(index){
+        layer.closeAll();
+        $(".button-upload-voice").attr("disabled", "").find(".text").text('重新上传');
+      }
+    });
+
                 // alert('上传失败');
         				// alert(JSON.stringify(err));
         			}

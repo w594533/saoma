@@ -126,7 +126,16 @@ function upload(){
 
             },
       			error: function(err) {
-      				alert(JSON.stringify(err));
+              layer.open({
+    content: '由于文件较大，上传超时，请在网络良好的情况下上传'
+    ,btn: ['确定']
+    ,yes: function(index){
+      alert(JSON.stringify(err));
+      location.reload();
+      // layer.close(index);
+    }
+  });
+
       			}
           })
         }
