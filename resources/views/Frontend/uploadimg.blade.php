@@ -1,6 +1,7 @@
 @extends('Frontend.layouts.default')
 @section('css')
   <style>
+  .hide {display: none !important;}
   .upload-btn .hide {display: none;}
   .upload-btn button {display: block; min-width: 120px; margin: 10px auto;}
   </style>
@@ -14,7 +15,7 @@
 <div class="upload-btn">
   {{ csrf_field() }}
   <button class="button-select-img btn btn-default btn-sm"><i class="fa fa-save"></i> <span class="text">选择图片</span></button>
-  <button class="button-upload-img btn btn-default btn-sm"><i class="fa fa-cloud-upload"></i> <span class="text">开始上传</span></button>
+  <button class="button-upload-img btn btn-default btn-sm hide"><i class="fa fa-cloud-upload"></i> <span class="text">开始上传</span></button>
   <button class="button-upload-back btn btn-default btn-sm"><i class="fa fa-mail-reply"></i> <span class="text">返回</span></button>
 </div>
 <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
@@ -40,7 +41,7 @@ $(function() {
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
       success: function(res) {
-        $(".button-upload-img").find('.text').text('开始上传(已选择' + res.localIds.length + ' 张图片)');
+        $(".button-upload-img").removeClass("hide").find('.text').text('开始上传(已选择' + res.localIds.length + ' 张图片)');
         //alert('已选择 ' + res.localIds.length + ' 张图片');
         images.localIds = res.localIds;
         var imghtml = '';
@@ -66,7 +67,7 @@ $(function() {
           alert('请先使用 chooseImage 接口选择图片');
           return;
         }
-        $(".button-select-img").attr("disabled", "disabled");
+        $(".button-select-img").addClass("hide").attr("disabled", "disabled");
         $(".button-upload-img").removeClass("hide");
       }
     });
@@ -75,6 +76,9 @@ $(function() {
   //上传图片
   $(".button-upload-img").on('touchstart', function() {
     // layer.open({  type: 2,content: '上传中' });
+    // $(".button-select-img").attr("disabled", "disabled");
+    // $(".button-upload-img").attr("disabled", "disabled");
+    $(".button-select-img").addClass("hide");
     upload();
   })
 });
@@ -106,7 +110,7 @@ function upload(){
             success: function(res) {
               if (res.status == 'ok') {
                 layer.closeAll();
-                $(".button-select-img").attr("disabled", "");
+                $(".button-select-img").removeClass("hide").attr("disabled", "");
                 $(".button-upload-img").addClass("hide").find('.text').text('开始上传');
                 //alert(res);
                 layer.open({
