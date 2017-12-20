@@ -65,7 +65,7 @@ class DeleteBox extends Command
         }
 
         //删除视频
-        $bucketName = 'customer-saoma';
+        $bucketName = 'rangge-saoma';
         if ($box->video_osskey) {
           OSS::publicDeleteObject($bucketName, $box->video_osskey);
         }

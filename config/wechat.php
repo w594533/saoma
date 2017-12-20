@@ -6,7 +6,7 @@ return [
      *
      * 当值为 false 时，所有的日志都不会记录
      */
-    'debug'  => true,
+    'debug'  => false,
 
     /*
      * 使用 Laravel 的缓存系统
@@ -81,7 +81,7 @@ return [
      * callback：OAuth授权完成后的回调页地址(如果使用中间件，则随便填写。。。)
      */
     'oauth' => [
-        'only_wechat_browser' => false,
+        'only_wechat_browser' => true,
         'scopes'   => array_map('trim', explode(',', env('WECHAT_OAUTH_SCOPES', 'snsapi_userinfo'))),
         'callback' => env('WECHAT_OAUTH_CALLBACK', '/examples/oauth_callback.php'),
     ],

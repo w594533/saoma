@@ -17,7 +17,7 @@ class BoxController extends FrontendController
     public function __construct()
     {
       parent::__construct();
-      $this->bucketName = 'customer-saoma';
+      $this->bucketName = 'rangge-saoma';
     }
 
     public function show(Request $request, Box $box)
