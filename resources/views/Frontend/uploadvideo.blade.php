@@ -1,4 +1,7 @@
 @extends('Frontend.layouts.default')
+@section('title')
+  上传视频|乐趴创意礼物
+@endsection
 @section('css')
   <script src="/js/jquery.Huploadify.js"></script>
   <link rel="stylesheet" href="/css/Huploadify.css">

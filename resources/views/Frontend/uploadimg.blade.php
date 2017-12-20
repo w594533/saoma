@@ -1,4 +1,7 @@
 @extends('Frontend.layouts.default')
+@section('title')
+  上传图片|乐趴创意礼物
+@endsection
 @section('css')
   <style>
   .hide {display: none !important;}

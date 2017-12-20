@@ -1,4 +1,7 @@
 @extends('Frontend.layouts.default')
+@section('title')
+  上传语音|乐趴创意礼物
+@endsection
 @section('css')
     <link rel="stylesheet" href="/css/plyr/plyr.css">
     <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/avenir-medium.woff2">

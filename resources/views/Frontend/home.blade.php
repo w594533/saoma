@@ -1,4 +1,7 @@
 @extends('Frontend.layouts.default')
+@section('title')
+  乐趴创意礼物
+@endsection
 @section('css')
   <style>
     .slogin a {color: #615d5d; text-decoration: none;}

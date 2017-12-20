@@ -42,7 +42,8 @@ class BoxController extends FrontendController
         return redirect()->route('home');
       } else {
         //不一致，查看资料
-        return view('Frontend.view', compact('box'));
+        $video_url = $box->video;
+        return view('Frontend.view', compact('box', 'video_url'));
       }
     }
 
@@ -206,7 +207,7 @@ class BoxController extends FrontendController
         // 临时素材
         $temporary = $app->material_temporary;
         $media_id = $request->media_id;
-        @mkdir(storage_path('app/public').'/upload/'.$user->id.'/', 0777, true);
+        Storage::makeDirectory('public/upload/'.$user->id);
         $filename = md5(md5(time().rand(1,9999)));
         $last_filename = $filename;
 
@@ -253,11 +254,13 @@ class BoxController extends FrontendController
     {
       $this->_check_box();
       $box = Box::find(session('ws.box')->id);
-      if(preg_match("/\x20*https?\:\/\/.*/i",$box->video)) {
-        $video_url = $box->video;
-      } else {
-        $video_url = Storage::url($box->video);
-      }
+      $video_url = $box->video;
+
+      // if(preg_match("/\x20*https?\:\/\/.*/i",$box->video)) {
+      //   $video_url = $box->video;
+      // } else {
+      //   $video_url = Storage::url($box->video);
+      // }
       return view('Frontend.uploadvideo', compact('box', 'video_url'));
     }
 

@@ -1,4 +1,7 @@
 @extends('Frontend.layouts.default')
+@section('title')
+  乐趴创意礼物
+@endsection
 @section('css')
   <link rel="stylesheet" href="/css/swiper.min.css">
   <link rel="stylesheet" href="/css/plyr/plyr.css">
@@ -48,12 +51,12 @@
     </div>
   @endif
 
-  @if ($box->video)
+  @if ($video_url)
     <div class="video-box item">
       {{-- <div class="solign"><h3><span>视频</span></h3></div> --}}
       <div class="inner">
         <video controls>
-          <source src="{{ Storage::url($box->video) }}" type="video/mp4">
+          <source src="{{ $video_url }}" type="video/mp4">
         </video>
       </div>
     </div>

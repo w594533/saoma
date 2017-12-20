@@ -1,4 +1,7 @@
 @extends('Frontend.layouts.default')
+@section('title')
+  录入文字|乐趴创意礼物
+@endsection
 @section('css')
   <style>
     .content {
