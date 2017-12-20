@@ -102,7 +102,7 @@ class BoxController extends FrontendController
       // 临时素材
       $temporary = $app->material_temporary;
       $media_ids = $request->media_ids;
-      $media_ids = explode(",", $media_ids);
+      // $media_ids = explode(",", $media_ids);
       $files = [];
       $imgcompress_files = [];
       Storage::makeDirectory('public/upload/'.$user->id);

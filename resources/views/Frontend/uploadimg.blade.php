@@ -67,7 +67,7 @@ $(function() {
           alert('请先使用 chooseImage 接口选择图片');
           return;
         }
-        $(".button-select-img").addClass("hide").attr("disabled", "disabled");
+
         $(".button-upload-img").removeClass("hide");
       }
     });
@@ -78,6 +78,7 @@ $(function() {
     // layer.open({  type: 2,content: '上传中' });
     // $(".button-select-img").attr("disabled", "disabled");
     // $(".button-upload-img").attr("disabled", "disabled");
+    $(".button-select-img").addClass("hide").attr("disabled", "disabled");
     $(".button-select-img").addClass("hide");
     upload();
   })
@@ -101,11 +102,12 @@ function upload(){
         //alert("3323"+JSON.stringify(images.serverId));
         //alert(JSON.stringify(images.serverId));
         if (images.serverId) {
+          layer.open({  type: 2,content: '上传中' });
           //将图片下载到服务器
           $.ajax({
             type:'post',
             url: "{{route('uploadimg')}}",
-            data: {'media_ids':images.serverId.join(","), _token:$('input[name="_token"]').val()},
+            data: {'media_ids':images.serverId, _token:$('input[name="_token"]').val()},
             dataType: 'json',
             success: function(res) {
               if (res.status == 'ok') {
