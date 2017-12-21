@@ -23,8 +23,8 @@ class BoxController extends FrontendController
     public function show(Request $request, Box $box)
     {
       $user = session('ws.user');
+      $box = session('ws.box');
 
-      $box = Box::find($box->id);
       if (!$box) {
         abort(404, '页面不存在！');
       }
@@ -33,12 +33,10 @@ class BoxController extends FrontendController
         $box->user_id = $user->id;
         $box->status = 2;
         $box->save();
-        $request->session()->put('ws.box', $box);
         return redirect()->route('home');
       }
       if ($box->user_id == $user->id) {
         //一致，进入首页，上传
-        $request->session()->put('ws.box', $box);
         return redirect()->route('home');
       } else {
         //不一致，查看资料

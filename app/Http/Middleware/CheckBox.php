@@ -34,6 +34,18 @@ class CheckBox
           $user->save();
         }
         session(['ws.user' => $user]);
+
+        $box = $request->box;
+        $box = Box::find($box->id);
+        if (!$box) {
+          abort(404, '页面不存在！');
+        }
+        if (!$box->user_id) {
+          $box->user_id = $user->id;
+          $box->status = 2;
+          $box->save();
+        }
+        session(['ws.box' => $box]);
         return $next($request);
     }
 }
