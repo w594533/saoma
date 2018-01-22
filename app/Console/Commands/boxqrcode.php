@@ -49,7 +49,7 @@ class boxqrcode extends Command
         $file = 'upload/qrcode/'.date("Ymd", strtotime($box->created_at)).'-'.$box->id.".png";
         $save_path = storage_path('app/public/').$file;
         $fp=fopen($save_path,"w+");
-        QrCode::format('png')->size(500)->merge('/logo.png')->margin(1)->generate($url, $save_path);
+        QrCode::format('png')->size(500)->merge('/logo.png', .1)->errorCorrection("L")->generate($url, $save_path);
         if (file_exists($save_path)) {
           $box->qrcode = $file;
           $box->save();
